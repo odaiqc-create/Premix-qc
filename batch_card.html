@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Batch Card</title>
+<style>
+  :root {
+    --navy:   #0D1B2A;
+    --steel:  #1B4F72;
+    --blue:   #2471A3;
+    --green:  #145A32;
+    --grnbg:  #D5F5E3;
+    --yellow: #7D6608;
+    --ylwbg:  #FEF9E7;
+    --ylwbrd: #F0B429;
+    --red:    #7B241C;
+    --redbg:  #FDEDEC;
+    --grey:   #717D7E;
+    --ltgrey: #F0F4F8;
+    --white:  #FFFFFF;
+    --bdr:    #DEE5ED;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+    background: #E8EEF4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 16px 40px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(13,27,42,0.15);
+    width: 100%;
+    max-width: 460px;
+    overflow: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  .hdr {
+    background: linear-gradient(145deg, #0D1B2A 0%, #1B4F72 60%, #2471A3 100%);
+    padding: 28px 24px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hdr::after {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .hdr-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .logo-wrap {
+    width: 54px; height: 54px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 14px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; flex-shrink: 0;
+    backdrop-filter: blur(4px);
+  }
+  .hdr-company {
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hdr-product {
+    font-size: 19px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .hdr-batch {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 6px;
+  }
+
+  /* ─── STATUS ─── */
+  .status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--bdr);
+    background: var(--white);
+  }
+  .status-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--grey);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .badge {
+    padding: 7px 22px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .badge.RELEASED { background: var(--grnbg); color: var(--green); }
+  .badge.HOLD     { background: var(--ylwbg); color: var(--yellow);
+    border: 2px solid var(--ylwbrd); }
+  .badge.REJECTED { background: var(--redbg); color: var(--red); }
+  .badge.UNKNOWN  { background: var(--ltgrey); color: var(--grey); }
+
+  /* ─── EVAL BAR ─── */
+  .eval-bar {
+    margin: 14px 20px 0;
+    padding: 14px 18px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eval-bar.PASS { background: var(--grnbg); }
+  .eval-bar.FAIL { background: var(--redbg); }
+  .eval-bar.UNKNOWN { background: var(--ltgrey); }
+  .eval-icon { font-size: 28px; line-height: 1; flex-shrink: 0; }
+  .eval-sublabel { font-size: 10px; font-weight: 700; color: var(--grey);
+    letter-spacing: 1.2px; text-transform: uppercase; }
+  .eval-result {
+    font-size: 20px; font-weight: 800; margin-top: 2px;
+  }
+  .eval-result.PASS { color: var(--green); }
+  .eval-result.FAIL { color: var(--red); }
+
+  /* ─── METRICS ─── */
+  .metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 14px 20px 0;
+  }
+  .metric {
+    background: var(--ltgrey);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    border: 1.5px solid transparent;
+    transition: border-color .2s;
+  }
+  .metric.warn  { background: var(--redbg);  border-color: var(--red);    }
+  .metric.good  { background: var(--grnbg);  border-color: var(--green);  }
+  .metric-value { font-size: 24px; font-weight: 800; color: var(--navy); line-height: 1; }
+  .metric.warn .metric-value { color: var(--red);   }
+  .metric.good .metric-value { color: var(--green); }
+  .metric-unit  { font-size: 10px; color: var(--grey);
+    font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-top: 4px; }
+
+  /* ─── SECTION ─── */
+  .section-head {
+    margin: 16px 20px 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--steel);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #D6EAF8;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 4px 20px 8px;
+  }
+  .info-item {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--ltgrey);
+  }
+  .info-item:nth-last-child(-n+2) { border-bottom: none; }
+  .info-key {
+    font-size: 10px; color: var(--grey);
+    font-weight: 700; letter-spacing: .8px;
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .info-val {
+    font-size: 14px; font-weight: 600; color: var(--navy);
+  }
+  .info-val.mono { font-family: 'Courier New', monospace; font-size: 13px; }
+  .info-val.ok   { color: var(--green); }
+  .info-val.ng   { color: var(--red);   }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    margin: 10px 0 0;
+    background: var(--ltgrey);
+    padding: 14px 20px;
+    border-top: 1px solid var(--bdr);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footer-meta { font-size: 12px; color: var(--grey); }
+  .footer-meta strong { color: var(--navy); }
+
+  .btn-row {
+    display: flex; gap: 8px;
+    padding: 14px 20px 20px;
+  }
+  .btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center;
+    justify-content: center; gap: 6px;
+    transition: opacity .15s;
+  }
+  .btn:hover { opacity: .85; }
+  .btn-pdf   { background: var(--steel); color: #fff; }
+  .btn-share { background: var(--ltgrey); color: var(--navy);
+    border: 1.5px solid var(--bdr); }
+
+  /* ─── WATERMARK for invalid ─── */
+  .invalid {
+    padding: 60px 24px;
+    text-align: center;
+    color: var(--grey);
+  }
+  .invalid .icon { font-size: 52px; margin-bottom: 14px; display: block; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card { box-shadow: none; border-radius: 0; max-width: 100%; }
+    .btn-row { display: none; }
+    .hdr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .badge, .eval-bar, .metric { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="invalid"><span class="icon">⏳</span><p>Loading…</p></div>
+</div>
+
+<script>
+function q(k){ return new URLSearchParams(location.search).get(k) || ''; }
+function esc(s){ return String(s||'—').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function fmtDate(d){
+  try{ return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+  catch{ return d; }
+}
+
+function render(){
+  const batch    = q('b')  || 'DEMO-001';
+  const product  = q('p')  || 'Broiler Starter Premix';
+  const density  = q('d')  || '';
+  const moisture = q('m')  || '';
+  const status   = q('s')  || 'UNKNOWN';
+  const date     = q('dt') || new Date().toISOString().slice(0,10);
+  const customer = q('c')  || '—';
+  const inspector= q('i')  || '—';
+  const evalRes  = q('e')  || 'UNKNOWN';
+  const qty      = q('qty')|| '—';
+  const color    = q('col')|| '—';
+  const company  = q('co') || 'PREMIX FEED FACTORY';
+  const prodCode = q('pc') || '—';
+
+  // Status badge class
+  const sClass = ['RELEASED','HOLD','REJECTED'].includes(status) ? status : 'UNKNOWN';
+  // Eval
+  const eClass = ['PASS','FAIL'].includes(evalRes) ? evalRes : 'UNKNOWN';
+  const eIcon  = eClass === 'PASS' ? '✅' : eClass === 'FAIL' ? '⚠️' : '❓';
+
+  // Metric classes
+  const d_num = parseFloat(density);
+  const m_num = parseFloat(moisture);
+  const d_class = !density ? '' : (d_num < 0.45 || d_num > 0.70) ? 'warn' : 'good';
+  const m_class = !moisture ? '' : m_num > 10 ? 'warn' : 'good';
+  const c_class = color === 'OK' ? 'ok' : color === 'NG' ? 'ng' : '';
+
+  document.getElementById('card').innerHTML = `
+    <div class="hdr">
+      <div class="hdr-top">
+        <div class="logo-wrap">🏭</div>
+        <div>
+          <div class="hdr-company">${esc(company)}</div>
+          <div class="hdr-product">${esc(product)}</div>
+        </div>
+      </div>
+      <div class="hdr-batch">📦 ${esc(batch)}</div>
+    </div>
+
+    <div class="status-row">
+      <span class="status-lbl">QC STATUS</span>
+      <span class="badge ${sClass}">${esc(status)}</span>
+    </div>
+
+    <div class="eval-bar ${eClass}">
+      <div class="eval-icon">${eIcon}</div>
+      <div>
+        <div class="eval-sublabel">QC Evaluation Result</div>
+        <div class="eval-result ${eClass}">${esc(evalRes)}</div>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric ${d_class}">
+        <div class="metric-value">${density || '—'}</div>
+        <div class="metric-unit">Density (kg/L)</div>
+      </div>
+      <div class="metric ${m_class}">
+        <div class="metric-value">${moisture ? moisture+'%' : '—'}</div>
+        <div class="metric-unit">Moisture</div>
+      </div>
+    </div>
+
+    <div class="section-head">Batch Details</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-key">Date</div>
+        <div class="info-val">${fmtDate(date)}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Batch No.</div>
+        <div class="info-val mono">${esc(batch)}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Product Code</div>
+        <div class="info-val mono">${esc(prodCode)}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Customer</div>
+        <div class="info-val">${esc(customer)}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Produced (kg)</div>
+        <div class="info-val">${esc(qty)}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Color Check</div>
+        <div class="info-val ${c_class}">${esc(color)}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">QC Inspector</div>
+        <div class="info-val">${esc(inspector)}</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="footer-meta">📅 <strong>${fmtDate(date)}</strong></span>
+      <span class="footer-meta">👤 <strong>${esc(inspector)}</strong></span>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-pdf" onclick="window.print()">🖨️ Print / PDF</button>
+      <button class="btn btn-share" onclick="copyLink()">🔗 Copy Link</button>
+    </div>
+  `;
+}
+
+function copyLink(){
+  navigator.clipboard.writeText(location.href)
+    .then(()=>alert('Link copied!'))
+    .catch(()=>prompt('Copy this link:',location.href));
+}
+
+render();
+</script>
+</body>
+</html>
