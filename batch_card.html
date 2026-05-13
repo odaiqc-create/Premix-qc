@@ -1,267 +1,321 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Batch Card</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy:   #0D1B2A;
-    --steel:  #1B4F72;
-    --blue:   #2471A3;
-    --green:  #145A32;
-    --grnbg:  #D5F5E3;
-    --yellow: #7D6608;
-    --ylwbg:  #FEF9E7;
-    --ylwbrd: #F0B429;
-    --red:    #7B241C;
-    --redbg:  #FDEDEC;
-    --grey:   #717D7E;
-    --ltgrey: #F0F4F8;
-    --white:  #FFFFFF;
-    --bdr:    #DEE5ED;
+    --green:      #2D6A4F;
+    --green-mid:  #40916C;
+    --green-light:#D8F3DC;
+    --green-soft: #B7E4C7;
+    --gray-card:  #F4F6F8;
+    --gray-border:#E2E8EE;
+    --gray-label: #8A95A3;
+    --gray-dark:  #3D4A5C;
+    --navy:       #1A2535;
+    --white:      #FFFFFF;
+    --yellow-bg:  #FFFBEB;
+    --yellow:     #B45309;
+    --red-bg:     #FEF2F2;
+    --red:        #B91C1C;
+    --shadow:     0 2px 16px rgba(26,37,53,0.08);
+    --shadow-sm:  0 1px 4px rgba(26,37,53,0.07);
   }
 
-- { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-font-family: ‘Segoe UI’, system-ui, -apple-system, Arial, sans-serif;
-background: #E8EEF4;
-min-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: flex-start;
-padding: 24px 16px 40px;
-}
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #EFF2F5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 28px 16px 48px;
+  }
 
-.card {
-background: var(–white);
-border-radius: 20px;
-box-shadow: 0 12px 40px rgba(13,27,42,0.15);
-width: 100%;
-max-width: 460px;
-overflow: hidden;
-}
+  .card {
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 8px 48px rgba(26,37,53,0.12);
+    width: 100%;
+    max-width: 460px;
+    overflow: hidden;
+  }
 
-/* ─── HEADER ─── */
-.hdr {
-background: linear-gradient(145deg, #0D1B2A 0%, #1B4F72 60%, #2471A3 100%);
-padding: 28px 24px 22px;
-position: relative;
-overflow: hidden;
-}
-.hdr::after {
-content: ‘’;
-position: absolute;
-top: -30px; right: -30px;
-width: 120px; height: 120px;
-border-radius: 50%;
-background: rgba(255,255,255,0.05);
-}
-.hdr-top {
-display: flex;
-align-items: center;
-gap: 14px;
-margin-bottom: 14px;
-}
-.logo-wrap {
-width: 54px; height: 54px;
-background: rgba(255,255,255,0.12);
-border-radius: 14px;
-border: 1.5px solid rgba(255,255,255,0.2);
-display: flex; align-items: center; justify-content: center;
-font-size: 26px; flex-shrink: 0;
-backdrop-filter: blur(4px);
-}
-.hdr-company {
-font-size: 10px;
-color: rgba(255,255,255,0.55);
-letter-spacing: 2.5px;
-text-transform: uppercase;
-margin-bottom: 4px;
-}
-.hdr-product {
-font-size: 19px;
-font-weight: 700;
-color: #fff;
-line-height: 1.2;
-}
-.hdr-batch {
-display: inline-block;
-background: rgba(255,255,255,0.1);
-border: 1px solid rgba(255,255,255,0.18);
-color: rgba(255,255,255,0.8);
-font-size: 12px;
-font-family: ‘Courier New’, monospace;
-letter-spacing: 1.5px;
-padding: 4px 12px;
-border-radius: 20px;
-margin-top: 6px;
-}
+  /* ── HEADER ── */
+  .hdr {
+    background: var(--white);
+    padding: 28px 24px 22px;
+    border-bottom: 1px solid var(--gray-border);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
 
-/* ─── STATUS ─── */
-.status-row {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 14px 22px;
-border-bottom: 1px solid var(–bdr);
-background: var(–white);
-}
-.status-lbl {
-font-size: 11px;
-font-weight: 700;
-color: var(–grey);
-letter-spacing: 1.5px;
-text-transform: uppercase;
-}
-.badge {
-padding: 7px 22px;
-border-radius: 30px;
-font-weight: 800;
-font-size: 14px;
-letter-spacing: 1px;
-text-transform: uppercase;
-}
-.badge.RELEASED { background: var(–grnbg); color: var(–green); }
-.badge.HOLD     { background: var(–ylwbg); color: var(–yellow);
-border: 2px solid var(–ylwbrd); }
-.badge.REJECTED { background: var(–redbg); color: var(–red); }
-.badge.UNKNOWN  { background: var(–ltgrey); color: var(–grey); }
+  .logo-wrap {
+    width: 56px; height: 56px;
+    background: var(--green-light);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--green-soft);
+  }
 
-/* ─── EVAL BAR ─── */
-.eval-bar {
-margin: 14px 20px 0;
-padding: 14px 18px;
-border-radius: 12px;
-display: flex;
-align-items: center;
-gap: 14px;
-}
-.eval-bar.PASS { background: var(–grnbg); }
-.eval-bar.FAIL { background: var(–redbg); }
-.eval-bar.UNKNOWN { background: var(–ltgrey); }
-.eval-icon { font-size: 28px; line-height: 1; flex-shrink: 0; }
-.eval-sublabel { font-size: 10px; font-weight: 700; color: var(–grey);
-letter-spacing: 1.2px; text-transform: uppercase; }
-.eval-result {
-font-size: 20px; font-weight: 800; margin-top: 2px;
-}
-.eval-result.PASS { color: var(–green); }
-.eval-result.FAIL { color: var(–red); }
+  .hdr-text { flex: 1; min-width: 0; }
 
-/* ─── METRICS ─── */
-.metrics {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 10px;
-padding: 14px 20px 0;
-}
-.metric {
-background: var(–ltgrey);
-border-radius: 12px;
-padding: 14px;
-text-align: center;
-border: 1.5px solid transparent;
-transition: border-color .2s;
-}
-.metric.warn  { background: var(–redbg);  border-color: var(–red);    }
-.metric.good  { background: var(–grnbg);  border-color: var(–green);  }
-.metric-value { font-size: 24px; font-weight: 800; color: var(–navy); line-height: 1; }
-.metric.warn .metric-value { color: var(–red);   }
-.metric.good .metric-value { color: var(–green); }
-.metric-unit  { font-size: 10px; color: var(–grey);
-font-weight: 600; letter-spacing: 1px;
-text-transform: uppercase; margin-top: 4px; }
+  .hdr-company {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--green-mid);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
 
-/* ─── SECTION ─── */
-.section-head {
-margin: 16px 20px 4px;
-font-size: 10px;
-font-weight: 700;
-color: var(–steel);
-letter-spacing: 2px;
-text-transform: uppercase;
-padding-bottom: 6px;
-border-bottom: 2px solid #D6EAF8;
-}
+  .hdr-product {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
 
-.info-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-padding: 4px 20px 8px;
-}
-.info-item {
-padding: 9px 0;
-border-bottom: 1px solid var(–ltgrey);
-}
-.info-item:nth-last-child(-n+2) { border-bottom: none; }
-.info-key {
-font-size: 10px; color: var(–grey);
-font-weight: 700; letter-spacing: .8px;
-text-transform: uppercase; margin-bottom: 3px;
-}
-.info-val {
-font-size: 14px; font-weight: 600; color: var(–navy);
-}
-.info-val.mono { font-family: ‘Courier New’, monospace; font-size: 13px; }
-.info-val.ok   { color: var(–green); }
-.info-val.ng   { color: var(–red);   }
+  .hdr-batch-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gray-card);
+    border: 1px solid var(--gray-border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-dark);
+  }
 
-/* ─── FOOTER ─── */
-.footer {
-margin: 10px 0 0;
-background: var(–ltgrey);
-padding: 14px 20px;
-border-top: 1px solid var(–bdr);
-display: flex;
-align-items: center;
-justify-content: space-between;
-flex-wrap: wrap;
-gap: 8px;
-}
-.footer-meta { font-size: 12px; color: var(–grey); }
-.footer-meta strong { color: var(–navy); }
+  /* ── STATUS BAND ── */
+  .status-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: var(--gray-card);
+    border-bottom: 1px solid var(--gray-border);
+  }
 
-.btn-row {
-display: flex; gap: 8px;
-padding: 14px 20px 20px;
-}
-.btn {
-flex: 1;
-padding: 12px;
-border-radius: 10px;
-border: none;
-font-size: 13px;
-font-weight: 700;
-cursor: pointer;
-display: flex; align-items: center;
-justify-content: center; gap: 6px;
-transition: opacity .15s;
-}
-.btn:hover { opacity: .85; }
-.btn-pdf   { background: var(–steel); color: #fff; }
-.btn-share { background: var(–ltgrey); color: var(–navy);
-border: 1.5px solid var(–bdr); }
+  .status-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gray-label);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
 
-/* ─── WATERMARK for invalid ─── */
-.invalid {
-padding: 60px 24px;
-text-align: center;
-color: var(–grey);
-}
-.invalid .icon { font-size: 52px; margin-bottom: 14px; display: block; }
+  .badge {
+    padding: 5px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
 
-@media print {
-body { background: #fff; padding: 0; }
-.card { box-shadow: none; border-radius: 0; max-width: 100%; }
-.btn-row { display: none; }
-.hdr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.badge, .eval-bar, .metric { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-}
+  .badge.RELEASED { background: var(--green-light); color: var(--green); border: 1.5px solid var(--green-soft); }
+  .badge.HOLD     { background: var(--yellow-bg);  color: var(--yellow); border: 1.5px solid #FCD34D; }
+  .badge.REJECTED { background: var(--red-bg);    color: var(--red);    border: 1.5px solid #FECACA; }
+  .badge.UNKNOWN  { background: var(--gray-card);  color: var(--gray-label); border: 1.5px solid var(--gray-border); }
+
+  /* ── BODY ── */
+  .body { padding: 20px 20px 8px; }
+
+  /* ── SECTION LABEL ── */
+  .section-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gray-label);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-lbl::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gray-border);
+  }
+
+  /* ── METRICS ROW ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .metric {
+    background: var(--gray-card);
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--gray-border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric.good { background: var(--green-light); border-color: var(--green-soft); }
+  .metric.warn { background: var(--red-bg);      border-color: #FECACA; }
+
+  .metric-icon { font-size: 16px; margin-bottom: 6px; display: block; }
+  .metric-value { font-size: 22px; font-weight: 700; color: var(--navy); font-family: 'DM Mono', monospace; }
+  .metric.good .metric-value { color: var(--green); }
+  .metric.warn .metric-value { color: var(--red); }
+  .metric-key {
+    font-size: 10px; font-weight: 600; color: var(--gray-label);
+    letter-spacing: .8px; text-transform: uppercase; margin-top: 4px;
+  }
+  .ref-line {
+    font-size: 10px; color: var(--gray-label); margin-top: 3px;
+    font-family: 'DM Mono', monospace;
+  }
+  .ref-line span { font-weight: 600; color: var(--gray-dark); }
+
+  /* ── INFO CARDS ── */
+  .info-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .info-card {
+    background: var(--gray-card);
+    border: 1px solid var(--gray-border);
+    border-radius: 12px;
+    padding: 11px 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .info-card.full { grid-column: 1 / -1; }
+
+  .ic-icon {
+    font-size: 17px;
+    line-height: 1;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+  .ic-body { min-width: 0; }
+
+  .ic-key {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--gray-label);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .ic-val {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .ic-val.mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+
+  /* ── NOTES CARD ── */
+  .notes-card {
+    background: #FFFBEB;
+    border: 1px solid #FCD34D;
+    border-radius: 12px;
+    padding: 13px 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .notes-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  .notes-body {}
+
+  .notes-key {
+    font-size: 9px; font-weight: 700; color: #92400E;
+    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  .notes-val { font-size: 13px; font-weight: 500; color: #78350F; line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--gray-card);
+    border-top: 1px solid var(--gray-border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .footer-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--gray-label);
+  }
+
+  .footer-item strong { color: var(--gray-dark); font-weight: 600; }
+
+  /* ── ACTIONS ── */
+  .actions {
+    display: flex; gap: 8px;
+    padding: 14px 20px 20px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex; align-items: center;
+    justify-content: center; gap: 7px;
+    transition: transform .12s, opacity .15s;
+  }
+
+  .btn:hover { opacity: .88; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-print { background: var(--green); color: #fff; }
+  .btn-copy  { background: var(--gray-card); color: var(--navy); border: 1.5px solid var(--gray-border); }
+
+  /* ── INVALID ── */
+  .invalid { padding: 64px 24px; text-align: center; color: var(--gray-label); }
+  .invalid .icon { font-size: 48px; margin-bottom: 14px; display: block; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card { box-shadow: none; border-radius: 0; max-width: 100%; }
+    .actions { display: none; }
+    .metric, .info-card, .notes-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
 </style>
-
 </head>
 <body>
 <div class="card" id="card">
@@ -269,130 +323,169 @@ body { background: #fff; padding: 0; }
 </div>
 
 <script>
-function q(k){ return new URLSearchParams(location.search).get(k) || ''; }
-function esc(s){ return String(s||'—').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function q(k){ return new URLSearchParams(location.search).get(k) || ''; }
 
-function fmtDate(d){
-  try{ return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
-  catch{ return d; }
-}
+  function esc(s){
+    return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
 
-function render(){
-  const batch    = q('b')  || 'DEMO-001';
-  const product  = q('p')  || 'Broiler Starter Premix';
-  const density  = q('d')  || '';
-  const moisture = q('m')  || '';
-  const status   = q('s')  || 'UNKNOWN';
-  const date     = q('dt') || new Date().toISOString().slice(0,10);
-  const customer = q('c')  || '—';
-  const inspector= q('i')  || '—';
-  const evalRes  = q('e')  || 'UNKNOWN';
-  const qty      = q('qty')|| '—';
-  const color    = q('col')|| '—';
-  const company  = q('co') || 'PREMIX FEED FACTORY';
-  const prodCode = q('pc') || '—';
+  function val(s){ return esc(s) || '—'; }
 
-  // Status badge class
-  const sClass = ['RELEASED','HOLD','REJECTED'].includes(status) ? status : 'UNKNOWN';
-  // Eval
-  const eClass = ['PASS','FAIL'].includes(evalRes) ? evalRes : 'UNKNOWN';
-  const eIcon  = eClass === 'PASS' ? '✅' : eClass === 'FAIL' ? '⚠️' : '❓';
+  function fmtDate(d){
+    try { return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+    catch { return d || '—'; }
+  }
 
-  // Metric classes
-  const d_num = parseFloat(density);
-  const m_num = parseFloat(moisture);
-  const d_class = !density ? '' : (d_num < 0.45 || d_num > 0.70) ? 'warn' : 'good';
-  const m_class = !moisture ? '' : m_num > 10 ? 'warn' : 'good';
-  const c_class = color === 'OK' ? 'ok' : color === 'NG' ? 'ng' : '';
+  function metricClass(v, low, high){
+    if(!v) return '';
+    const n = parseFloat(v);
+    return (n < low || n > high) ? 'warn' : 'good';
+  }
 
-  document.getElementById('card').innerHTML = `
-    <div class="hdr">
-      <div class="hdr-top">
-        <div class="logo-wrap">🏭</div>
-        <div>
+  function render(){
+    /* ── URL params (matching your existing QR encoding) ── */
+    const company   = q('co')  || 'Alestsharia Animal Nutrition';
+    const product   = q('p')   || 'Broiler Starter Premix';
+    const batch     = q('b')   || 'DEMO-001';
+    const date      = q('dt')  || new Date().toISOString().slice(0,10);
+    const refDen    = q('rd')  || '';      // REF Density
+    const refMoi    = q('rm')  || '';      // REF Moisture
+    const density   = q('d')   || '';
+    const moisture  = q('m')   || '';
+    const qty       = q('qty') || '';      // Produced Qty (ton)
+    const bagWt     = q('bw')  || '';      // Bag Weight (kg)
+    const customer  = q('c')   || '';
+    const prodCode  = q('pc')  || '';
+    const notes     = q('n')   || '';
+    const status    = q('s')   || 'UNKNOWN';
+    const evalRes   = q('e')   || '';
+
+    const sClass = ['RELEASED','HOLD','REJECTED'].includes(status) ? status : 'UNKNOWN';
+
+    /* metric classes */
+    const dClass = metricClass(density,  0.40, 0.75);
+    const mClass = metricClass(moisture, 0,    10);
+
+    /* notes visibility */
+    const showNotes = notes && notes.trim().length > 0;
+
+    /* build inline ref lines */
+    const refDenLine = refDen ? `<div class="ref-line">REF: <span>${esc(refDen)} g/mL</span></div>` : '';
+    const refMoiLine = refMoi ? `<div class="ref-line">REF: <span>${esc(refMoi)}%</span></div>` : '';
+
+    /* produced + bag weight side by side */
+    const qtyCard = `
+      <div class="info-card">
+        <div class="ic-icon">⚖️</div>
+        <div class="ic-body">
+          <div class="ic-key">Produced Qty</div>
+          <div class="ic-val">${val(qty) !== '—' ? esc(qty)+' ton' : '—'}</div>
+        </div>
+      </div>`;
+
+    const bagCard = `
+      <div class="info-card">
+        <div class="ic-icon">🛍️</div>
+        <div class="ic-body">
+          <div class="ic-key">Bag Weight</div>
+          <div class="ic-val">${val(bagWt) !== '—' ? esc(bagWt)+' kg' : '—'}</div>
+        </div>
+      </div>`;
+
+    const notesSection = showNotes ? `
+      <div class="notes-card">
+        <div class="notes-icon">📋</div>
+        <div class="notes-body">
+          <div class="notes-key">QC Notes</div>
+          <div class="notes-val">${esc(notes)}</div>
+        </div>
+      </div>` : '';
+
+    document.getElementById('card').innerHTML = `
+
+      <!-- HEADER -->
+      <div class="hdr">
+        <div class="logo-wrap">🌿</div>
+        <div class="hdr-text">
           <div class="hdr-company">${esc(company)}</div>
           <div class="hdr-product">${esc(product)}</div>
+          <div class="hdr-batch-pill">📦 ${esc(batch)} &nbsp;·&nbsp; ${fmtDate(date)}</div>
         </div>
       </div>
-      <div class="hdr-batch">📦 ${esc(batch)}</div>
-    </div>
 
-    <div class="status-row">
-      <span class="status-lbl">QC STATUS</span>
-      <span class="badge ${sClass}">${esc(status)}</span>
-    </div>
+      <!-- STATUS BAND -->
+      <div class="status-band">
+        <span class="status-label">QC Status</span>
+        <span class="badge ${sClass}">${esc(status)}</span>
+      </div>
 
-    <div class="eval-bar ${eClass}">
-      <div class="eval-icon">${eIcon}</div>
-      <div>
-        <div class="eval-sublabel">QC Evaluation Result</div>
-        <div class="eval-result ${eClass}">${esc(evalRes)}</div>
-      </div>
-    </div>
+      <!-- BODY -->
+      <div class="body">
 
-    <div class="metrics">
-      <div class="metric ${d_class}">
-        <div class="metric-value">${density || '—'}</div>
-        <div class="metric-unit">Density (kg/L)</div>
-      </div>
-      <div class="metric ${m_class}">
-        <div class="metric-value">${moisture ? moisture+'%' : '—'}</div>
-        <div class="metric-unit">Moisture</div>
-      </div>
-    </div>
+        <!-- DENSITY & MOISTURE -->
+        <div class="section-lbl">QC Measurements</div>
+        <div class="metrics">
+          <div class="metric ${dClass}">
+            <span class="metric-icon">🧪</span>
+            <div class="metric-value">${density ? esc(density) : '—'}</div>
+            <div class="metric-key">Density (g/mL)</div>
+            ${refDenLine}
+          </div>
+          <div class="metric ${mClass}">
+            <span class="metric-icon">💧</span>
+            <div class="metric-value">${moisture ? esc(moisture)+'%' : '—'}</div>
+            <div class="metric-key">Moisture</div>
+            ${refMoiLine}
+          </div>
+        </div>
 
-    <div class="section-head">Batch Details</div>
-    <div class="info-grid">
-      <div class="info-item">
-        <div class="info-key">Date</div>
-        <div class="info-val">${fmtDate(date)}</div>
-      </div>
-      <div class="info-item">
-        <div class="info-key">Batch No.</div>
-        <div class="info-val mono">${esc(batch)}</div>
-      </div>
-      <div class="info-item">
-        <div class="info-key">Product Code</div>
-        <div class="info-val mono">${esc(prodCode)}</div>
-      </div>
-      <div class="info-item">
-        <div class="info-key">Customer</div>
-        <div class="info-val">${esc(customer)}</div>
-      </div>
-      <div class="info-item">
-        <div class="info-key">Produced (kg)</div>
-        <div class="info-val">${esc(qty)}</div>
-      </div>
-      <div class="info-item">
-        <div class="info-key">Color Check</div>
-        <div class="info-val ${c_class}">${esc(color)}</div>
-      </div>
-      <div class="info-item">
-        <div class="info-key">QC Inspector</div>
-        <div class="info-val">${esc(inspector)}</div>
-      </div>
-    </div>
+        <!-- BATCH INFO CARDS -->
+        <div class="section-lbl">Batch Details</div>
+        <div class="info-cards">
+          ${qtyCard}
+          ${bagCard}
+          <div class="info-card">
+            <div class="ic-icon">🏢</div>
+            <div class="ic-body">
+              <div class="ic-key">Customer</div>
+              <div class="ic-val">${val(customer)}</div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🔖</div>
+            <div class="ic-body">
+              <div class="ic-key">Product Code</div>
+              <div class="ic-val mono">${val(prodCode)}</div>
+            </div>
+          </div>
+        </div>
 
-    <div class="footer">
-      <span class="footer-meta">📅 <strong>${fmtDate(date)}</strong></span>
-      <span class="footer-meta">👤 <strong>${esc(inspector)}</strong></span>
-    </div>
+        <!-- QC NOTES (only if present) -->
+        ${notesSection}
 
-    <div class="btn-row">
-      <button class="btn btn-pdf" onclick="window.print()">🖨️ Print / PDF</button>
-      <button class="btn btn-share" onclick="copyLink()">🔗 Copy Link</button>
-    </div>
-  `;
-}
+      </div>
 
-function copyLink(){
-  navigator.clipboard.writeText(location.href)
-    .then(()=>alert('Link copied!'))
-    .catch(()=>prompt('Copy this link:',location.href));
-}
+      <!-- FOOTER -->
+      <div class="footer">
+        <div class="footer-item">📅 <strong>${fmtDate(date)}</strong></div>
+        ${evalRes ? `<div class="footer-item">✅ Eval: <strong>${esc(evalRes)}</strong></div>` : ''}
+      </div>
 
-render();
+      <!-- ACTIONS -->
+      <div class="actions">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print / PDF</button>
+        <button class="btn btn-copy"  onclick="copyLink()">🔗 Copy Link</button>
+      </div>
+    `;
+  }
+
+  function copyLink(){
+    navigator.clipboard.writeText(location.href)
+      .then(()=> alert('✅ Link copied!'))
+      .catch(()=> prompt('Copy this link:', location.href));
+  }
+
+  render();
 </script>
-
 </body>
 </html>
