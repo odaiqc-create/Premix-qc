@@ -2,456 +2,421 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Batch QC Card</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Batch Card</title>
+<style>
+:root {
+  --navy: #0D1B2A;
+  --steel: #1B4F72;
+  --blue: #2471A3;
+  --green: #145A32;
+  --grnbg: #D5F5E3;
+  --yellow: #7D6608;
+  --ylwbg: #FEF9E7;
+  --ylwbrd: #F0B429;
+  --red: #7B241C;
+  --redbg: #FDEDEC;
+  --grey: #717D7E;
+  --ltgrey: #F0F4F8;
+  --white: #FFFFFF;
+  --bdr: #DEE5ED;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #f0f2f5;
+  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  background: #E8EEF4;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 24px 16px 48px;
+  padding: 24px 16px 40px;
 }
-
 .card {
-  background: #fff;
+  background: var(--white);
   border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(13,27,42,0.15);
   width: 100%;
-  max-width: 420px;
+  max-width: 460px;
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
 }
-
-/* ── HEADER ── */
-.header {
-  padding: 20px 20px 16px;
-  border-bottom: 1px solid #eee;
+/* ─── HEADER ─── */
+.hdr {
+  background: linear-gradient(145deg, #0D1B2A 0%, #1B4F72 60%, #2471A3 100%);
+  padding: 28px 24px 22px;
+  position: relative;
+  overflow: hidden;
 }
-.company-row {
+.hdr::after {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.hdr-top {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: 14px;
+  margin-bottom: 14px;
 }
-.logo {
-  width: 44px; height: 44px;
-  background: #e8f5e9;
-  border-radius: 12px;
+.logo-wrap {
+  width: 54px; height: 54px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,0.2);
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
+  font-size: 26px; flex-shrink: 0;
+  backdrop-filter: blur(4px);
 }
-.company-name {
+.hdr-company {
   font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: #5a8a5a;
+  margin-bottom: 4px;
 }
-.product-name {
-  font-size: 22px;
+.hdr-product {
+  font-size: 19px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #fff;
   line-height: 1.2;
 }
-.batch-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #f5f5f5;
+.hdr-batch {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
   border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 13px;
-  color: #444;
-  margin-top: 10px;
+  margin-top: 6px;
 }
-.batch-pill .sep { color: #bbb; }
-
-/* ── STATUS BAR ── */
-.status-bar {
+/* ─── STATUS ─── */
+.status-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 11px 20px;
-  border-bottom: 1px solid #eee;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--bdr);
+  background: var(--white);
 }
-.status-label {
+.status-lbl {
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #999;
-}
-.status-badge {
-  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 1px;
-  padding: 4px 14px;
-  border-radius: 20px;
-  border: 1.5px solid #ccc;
-  color: #666;
-  background: #fff;
-}
-.status-badge.released {
-  background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7;
-}
-.status-badge.hold {
-  background: #fff3e0; color: #e65100; border-color: #ffcc80;
-}
-.status-badge.fail {
-  background: #ffebee; color: #c62828; border-color: #ef9a9a;
-}
-
-/* ── SECTION TITLE ── */
-.section-title {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
+  color: var(--grey);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #aaa;
-  padding: 14px 20px 6px;
 }
-
-/* ── QC MEASUREMENTS ── */
-.qc-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  padding: 0 16px 4px;
-}
-.qc-card {
-  border-radius: 14px;
-  padding: 14px;
-}
-.qc-card.density { background: #fff0f0; }
-.qc-card.moisture { background: #f0fff4; }
-.qc-icon { font-size: 18px; margin-bottom: 4px; }
-.qc-value {
-  font-size: 26px;
+.badge {
+  padding: 7px 22px;
+  border-radius: 30px;
   font-weight: 800;
-  letter-spacing: -0.5px;
-}
-.qc-card.density .qc-value { color: #c62828; }
-.qc-card.moisture .qc-value { color: #2e7d32; }
-.qc-unit {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
+  font-size: 14px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  color: #888;
-  margin-top: 2px;
 }
-.qc-ref {
-  font-size: 11px;
-  color: #888;
-  margin-top: 4px;
-}
-.qc-ref strong { color: #555; }
-
-/* ── BATCH DETAILS ── */
-.details-grid {
+.badge.RELEASED { background: var(--grnbg); color: var(--green); }
+.badge.HOLD     { background: var(--ylwbg); color: var(--yellow);
+                  border: 2px solid var(--ylwbrd); }
+.badge.REJECTED { background: var(--redbg); color: var(--red); }
+.badge.UNKNOWN  { background: var(--ltgrey); color: var(--grey); }
+/* ─── METRICS ─── */
+.metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  padding: 0 16px 4px;
+  padding: 14px 20px 0;
 }
-.detail-card {
-  background: #f9f9f9;
-  border-radius: 14px;
-  padding: 12px 14px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
+.metric {
+  background: var(--ltgrey);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  border: 1.5px solid transparent;
+  transition: border-color .2s;
 }
-.detail-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-.detail-label {
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: #aaa;
-  margin-bottom: 3px;
-}
-.detail-value {
-  font-size: 14px;
+.metric.warn { background: var(--redbg); border-color: var(--red); }
+.metric.good { background: var(--grnbg); border-color: var(--green); }
+.metric-icon { font-size: 20px; margin-bottom: 4px; }
+.metric-value { font-size: 24px; font-weight: 800; color: var(--navy); line-height: 1; }
+.metric.warn .metric-value { color: var(--red); }
+.metric.good .metric-value { color: var(--green); }
+.metric-unit  { font-size: 10px; color: var(--grey);
+                font-weight: 600; letter-spacing: 1px;
+                text-transform: uppercase; margin-top: 4px; }
+.metric-ref   { font-size: 10px; color: var(--grey); margin-top: 2px; }
+/* ─── SECTION ─── */
+.section-head {
+  margin: 16px 20px 4px;
+  font-size: 10px;
   font-weight: 700;
-  color: #222;
-  word-break: break-word;
+  color: var(--steel);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #D6EAF8;
 }
-.detail-value.empty { color: #ccc; font-weight: 400; font-size: 18px; }
-
-/* ── NOTES ── */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px 20px 8px;
+}
+.info-item {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--ltgrey);
+}
+.info-item.full {
+  grid-column: 1 / -1;
+}
+.info-item:nth-last-child(-n+2) { border-bottom: none; }
+.info-key {
+  font-size: 10px; color: var(--grey);
+  font-weight: 700; letter-spacing: .8px;
+  text-transform: uppercase; margin-bottom: 3px;
+}
+.info-val {
+  font-size: 14px; font-weight: 600; color: var(--navy);
+}
+.info-val.mono { font-family: 'Courier New', monospace; font-size: 13px; }
+.info-val.ok   { color: var(--green); }
+.info-val.ng   { color: var(--red);   }
+/* ─── NOTES BOX ─── */
 .notes-box {
-  margin: 0 16px 4px;
-  background: #fffbea;
-  border-radius: 14px;
-  padding: 12px 14px;
+  margin: 0 20px 12px;
+  background: var(--ylwbg);
+  border: 1.5px solid var(--ylwbrd);
+  border-radius: 10px;
+  padding: 10px 14px;
   display: flex;
   gap: 10px;
   align-items: flex-start;
 }
-.notes-icon { font-size: 18px; flex-shrink: 0; }
+.notes-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 .notes-label {
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: #aaa;
-  margin-bottom: 4px;
+  font-size: 10px; font-weight: 700; color: var(--yellow);
+  letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px;
 }
 .notes-text {
-  font-size: 13px;
-  color: #555;
-  line-height: 1.5;
-  white-space: pre-wrap;
+  font-size: 13px; color: var(--navy); font-weight: 500;
+  line-height: 1.5; white-space: pre-wrap;
 }
-
-/* ── DATE ── */
-.date-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 20px 4px;
-  font-size: 13px;
-  color: #888;
-}
-
-/* ── ACTIONS ── */
-.actions {
+/* ─── REFERENCE QC ─── */
+.ref-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  padding: 14px 16px 20px;
+  padding: 4px 20px 12px;
 }
-.btn {
-  border: none;
-  border-radius: 12px;
-  padding: 13px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+.ref-item {
+  background: var(--ltgrey);
+  border-radius: 10px;
+  padding: 10px 12px;
+  text-align: center;
+}
+.ref-key   { font-size: 10px; color: var(--grey); font-weight: 700;
+             letter-spacing: .8px; text-transform: uppercase; margin-bottom: 4px; }
+.ref-val   { font-size: 16px; font-weight: 700; color: var(--steel); }
+/* ─── FOOTER ─── */
+.footer {
+  margin: 10px 0 0;
+  background: var(--ltgrey);
+  padding: 14px 20px;
+  border-top: 1px solid var(--bdr);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: opacity 0.15s;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
 }
-.btn:active { opacity: 0.75; }
-.btn-primary { background: #2d5a2d; color: #fff; }
-.btn-secondary { background: #f0f0f0; color: #333; }
-```
-
-  </style>
+.footer-meta { font-size: 12px; color: var(--grey); }
+.footer-meta strong { color: var(--navy); }
+.btn-row {
+  display: flex; gap: 8px;
+  padding: 14px 20px 20px;
+}
+.btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center;
+  justify-content: center; gap: 6px;
+  transition: opacity .15s;
+}
+.btn:hover { opacity: .85; }
+.btn-pdf   { background: var(--steel); color: #fff; }
+.btn-share { background: var(--ltgrey); color: var(--navy);
+             border: 1.5px solid var(--bdr); }
+/* ─── WATERMARK for invalid ─── */
+.invalid {
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--grey);
+}
+.invalid .icon { font-size: 52px; margin-bottom: 14px; display: block; }
+@media print {
+  body { background: #fff; padding: 0; }
+  .card { box-shadow: none; border-radius: 0; max-width: 100%; }
+  .btn-row { display: none; }
+  .hdr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .badge, .metric, .notes-box, .ref-item { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
 </head>
 <body>
 <div class="card" id="card">
+  <div class="invalid"><span class="icon">⏳</span><p>Loading…</p></div>
+</div>
+<script>
+function q(k){ return new URLSearchParams(location.search).get(k) || ''; }
+function esc(s){ return String(s||'—').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function fmtDate(d){
+  try{ return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+  catch{ return d; }
+}
 
-  <!-- HEADER -->
+function render(){
+const batch   = q(‘b’)  || ‘DEMO-001’;
+const product = q(‘p’)  || ‘Broiler Starter Premix’;
+const density = q(‘d’)  || ‘’;
+const moisture= q(‘m’)  || ‘’;
+const status  = q(‘s’)  || ‘UNKNOWN’;
+const date    = q(‘dt’) || new Date().toISOString().slice(0,10);
+const customer= q(‘c’)  || ‘—’;
+const company = q(‘co’) || ‘PREMIX FEED FACTORY’;
+const prodCode= q(‘pc’) || ‘—’;
+const refDens = q(‘rd’) || ‘’;
+const refMoist= q(‘rm’) || ‘’;
 
-  <div class="header">
-    <div class="company-row">
-      <div class="logo">🌿</div>
-      <div>
-        <div class="company-name" id="company">—</div>
-        <div class="product-name" id="product">—</div>
-      </div>
-    </div>
-    <div class="batch-pill">
-      <span>📦</span>
-      <span id="batch">—</span>
-      <span class="sep">·</span>
-      <span id="date">—</span>
-    </div>
+// ── NEW PARAMS ──
+const producedTon = q(‘f’)  || ‘’;   // Produced qty in ton
+const bagWeight   = q(‘bw’) || ‘’;   // Bag weight in kg
+const notes       = q(‘nt’) || ‘’;   // Notes / ملاحظات
+
+// Status badge
+const sClass = [‘RELEASED’,‘HOLD’,‘REJECTED’].includes(status) ? status : ‘UNKNOWN’;
+
+// Metric classes (vs reference or fixed limits)
+const d_num = parseFloat(density);
+const m_num = parseFloat(moisture);
+const rd_num= parseFloat(refDens);
+const rm_num= parseFloat(refMoist);
+
+// density: ±10% from ref if available, else raw thresholds 0.45–0.70
+let d_class = ‘’;
+if (density) {
+if (refDens) {
+d_class = (d_num >= rd_num * 0.90 && d_num <= rd_num * 1.10) ? ‘good’ : ‘warn’;
+} else {
+d_class = (d_num >= 0.45 && d_num <= 0.70) ? ‘good’ : ‘warn’;
+}
+}
+// moisture: ≤10% pass
+const m_class = !moisture ? ‘’ : (m_num <= 10 ? ‘good’ : ‘warn’);
+
+// Produced qty display
+const qtyDisplay = producedTon
+? (parseFloat(producedTon) * 1000).toLocaleString(‘en’) + ’ kg’
+: ‘—’;
+const tonDisplay = producedTon
+? parseFloat(producedTon).toFixed(3) + ’ ton’
+: ‘’;
+
+// Bag weight display
+const bwDisplay = bagWeight ? parseFloat(bagWeight).toFixed(2) + ’ kg’ : ‘—’;
+
+// Reference section (only if values exist)
+const showRef = refDens || refMoist;
+const refSection = showRef ? `<div class="section-head">⚖️ Reference QC</div> <div class="ref-grid"> ${refDens  ?`<div class="ref-item"><div class="ref-key">REF Density</div><div class="ref-val">${esc(parseFloat(refDens).toFixed(3))} g/mL</div></div>`: ''} ${refMoist ?`<div class="ref-item"><div class="ref-key">REF Moisture</div><div class="ref-val">${esc(parseFloat(refMoist).toFixed(2))}%</div></div>` : ''} </div>` : ‘’;
+
+// Notes section (only if present)
+const notesSection = notes ? ` <div class="notes-box"> <div class="notes-icon">📝</div> <div> <div class="notes-label">Notes</div> <div class="notes-text">${esc(notes)}</div> </div> </div>` : ‘’;
+
+document.getElementById(‘card’).innerHTML = `
+<div class="hdr">
+<div class="hdr-top">
+<div class="logo-wrap">🌿</div>
+<div>
+<div class="hdr-company">${esc(company)}</div>
+<div class="hdr-product">${esc(product)}</div>
+</div>
+</div>
+<div class="hdr-batch">📦 ${esc(batch)} · ${fmtDate(date)}</div>
+</div>
+
+```
+<div class="status-row">
+  <span class="status-lbl">QC STATUS</span>
+  <span class="badge ${sClass}">${esc(status)}</span>
+</div>
+
+<div class="section-head">🧪 QC Measurements</div>
+<div class="metrics">
+  <div class="metric ${d_class}">
+    <div class="metric-icon">🧪</div>
+    <div class="metric-value">${density || '—'}</div>
+    <div class="metric-unit">Density (g/mL)</div>
+    ${refDens ? `<div class="metric-ref">REF: <strong>${parseFloat(refDens).toFixed(3)} g/mL</strong></div>` : ''}
   </div>
-
-  <!-- STATUS -->
-
-  <div class="status-bar">
-    <span class="status-label">QC STATUS</span>
-    <span class="status-badge" id="status-badge">UNKNOWN</span>
-  </div>
-
-  <!-- QC MEASUREMENTS -->
-
-  <div class="section-title">QC MEASUREMENTS</div>
-  <div class="qc-grid">
-    <div class="qc-card density">
-      <div class="qc-icon">🧪</div>
-      <div class="qc-value" id="density">—</div>
-      <div class="qc-unit">DENSITY (G/ML)</div>
-      <div class="qc-ref">REF: <strong id="ref-density">—</strong></div>
-    </div>
-    <div class="qc-card moisture">
-      <div class="qc-icon">💧</div>
-      <div class="qc-value" id="moisture">—</div>
-      <div class="qc-unit">MOISTURE</div>
-      <div class="qc-ref">REF: <strong id="ref-moisture">—</strong></div>
-    </div>
-  </div>
-
-  <!-- BATCH DETAILS -->
-
-  <div class="section-title">BATCH DETAILS</div>
-  <div class="details-grid">
-    <div class="detail-card">
-      <div class="detail-icon">⚖️</div>
-      <div>
-        <div class="detail-label">PRODUCED QTY</div>
-        <div class="detail-value" id="produced-qty"><span class="empty">—</span></div>
-      </div>
-    </div>
-    <div class="detail-card">
-      <div class="detail-icon">🛍️</div>
-      <div>
-        <div class="detail-label">BAG WEIGHT</div>
-        <div class="detail-value" id="bag-weight"><span class="empty">—</span></div>
-      </div>
-    </div>
-    <div class="detail-card">
-      <div class="detail-icon">🏢</div>
-      <div>
-        <div class="detail-label">CUSTOMER</div>
-        <div class="detail-value" id="customer">—</div>
-      </div>
-    </div>
-    <div class="detail-card">
-      <div class="detail-icon">🏷️</div>
-      <div>
-        <div class="detail-label">PRODUCT CODE</div>
-        <div class="detail-value" id="prod-code">—</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- NOTES (shown only if present) -->
-
-  <div id="notes-section" style="display:none;">
-    <div class="section-title">NOTES</div>
-    <div class="notes-box">
-      <div class="notes-icon">📝</div>
-      <div>
-        <div class="notes-label">QC NOTE</div>
-        <div class="notes-text" id="notes-text"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DATE -->
-
-  <div class="date-row">
-    <span>📅</span>
-    <span id="date-display">—</span>
-  </div>
-
-  <!-- ACTIONS -->
-
-  <div class="actions">
-    <button class="btn btn-primary" onclick="window.print()">🖨️ Print / PDF</button>
-    <button class="btn btn-secondary" onclick="copyLink()">🔗 Copy Link</button>
+  <div class="metric ${m_class}">
+    <div class="metric-icon">💧</div>
+    <div class="metric-value">${moisture ? moisture+'%' : '—'}</div>
+    <div class="metric-unit">Moisture</div>
+    ${refMoist ? `<div class="metric-ref">REF: <strong>${parseFloat(refMoist).toFixed(2)}%</strong></div>` : ''}
   </div>
 </div>
 
-<script>
-  function getParams() {
-    const p = new URLSearchParams(window.location.search);
-    return {
-      batch:      p.get('b')  || '',
-      product:    p.get('p')  || '',
-      density:    p.get('d')  || '',
-      moisture:   p.get('m')  || '',
-      status:     p.get('s')  || '',
-      date:       p.get('dt') || '',
-      customer:   p.get('c')  || '',
-      company:    p.get('co') || 'Alestsharia Animal Nutrition',
-      prodCode:   p.get('pc') || '',
-      refDensity: p.get('rd') || '',
-      refMoisture:p.get('rm') || '',
-      producedQty:p.get('pq') || '',   // NEW: Produced Qty (tons)
-      bagWeight:  p.get('bw') || '',   // NEW: Bag Weight (kg)
-      notes:      p.get('nt') || '',   // NEW: Notes from col T
-    };
-  }
+<div class="section-head">📋 Batch Details</div>
+<div class="info-grid">
+  <div class="info-item">
+    <div class="info-key">Produced Qty</div>
+    <div class="info-val">${qtyDisplay}${tonDisplay ? '<br><span style="font-size:11px;color:var(--grey)">'+tonDisplay+'</span>' : ''}</div>
+  </div>
+  <div class="info-item">
+    <div class="info-key">Bag Weight</div>
+    <div class="info-val">${bwDisplay}</div>
+  </div>
+  <div class="info-item">
+    <div class="info-key">Customer</div>
+    <div class="info-val">${esc(customer)}</div>
+  </div>
+  <div class="info-item">
+    <div class="info-key">Product Code</div>
+    <div class="info-val mono">${esc(prodCode)}</div>
+  </div>
+</div>
 
-  function formatDate(str) {
-    if (!str) return '—';
-    try {
-      const d = new Date(str);
-      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-    } catch { return str; }
-  }
+${notesSection}
 
-  function setText(id, val, fallback = '—') {
-    document.getElementById(id).textContent = val || fallback;
-  }
+${refSection}
 
-  function render() {
-    const q = getParams();
+<div class="footer">
+  <span class="footer-meta">📅 <strong>${fmtDate(date)}</strong></span>
+  <span class="footer-meta">🏭 <strong>${esc(company)}</strong></span>
+</div>
+<div class="btn-row">
+  <button class="btn btn-pdf"   onclick="window.print()">🖨️ Print / PDF</button>
+  <button class="btn btn-share" onclick="copyLink()">🔗 Copy Link</button>
+</div>
+```
 
-    // Header
-    document.getElementById('company').textContent = q.company.toUpperCase();
-    document.getElementById('product').textContent = q.product || '—';
-    document.getElementById('batch').textContent   = q.batch   || '—';
+`;
+}
 
-    // Date
-    const dateFormatted = formatDate(q.date);
-    document.getElementById('date').textContent         = dateFormatted;
-    document.getElementById('date-display').textContent = dateFormatted;
+function copyLink(){
+navigator.clipboard.writeText(location.href)
+.then(()=>alert(‘Link copied!’))
+.catch(()=>prompt(‘Copy this link:’,location.href));
+}
 
-    // Page title
-    if (q.product) document.title = q.product + ' · ' + q.batch;
-
-    // Status badge
-    const badge = document.getElementById('status-badge');
-    const s = q.status.toUpperCase();
-    badge.textContent = s || 'UNKNOWN';
-    if (s === 'RELEASED') badge.classList.add('released');
-    else if (s === 'HOLD') badge.classList.add('hold');
-    else if (s === 'FAIL') badge.classList.add('fail');
-
-    // QC measurements
-    document.getElementById('density').textContent  = q.density  ? q.density  + ' g/mL' : '0.000';
-    document.getElementById('moisture').textContent = q.moisture ? q.moisture + '%'      : '0.00%';
-    document.getElementById('ref-density').textContent  = q.refDensity  ? q.refDensity  + ' g/mL' : '—';
-    document.getElementById('ref-moisture').textContent = q.refMoisture ? q.refMoisture + '%'      : '—';
-
-    // Batch details
-    // Produced qty: stored as tons → display as tons
-    const pqEl = document.getElementById('produced-qty');
-    if (q.producedQty) {
-      pqEl.innerHTML = '';
-      pqEl.textContent = parseFloat(q.producedQty).toFixed(3) + ' ton';
-    }
-
-    // Bag weight in kg
-    const bwEl = document.getElementById('bag-weight');
-    if (q.bagWeight) {
-      bwEl.innerHTML = '';
-      bwEl.textContent = parseFloat(q.bagWeight).toFixed(1) + ' kg';
-    }
-
-    document.getElementById('customer').textContent  = q.customer  || '—';
-    document.getElementById('prod-code').textContent = q.prodCode  || '—';
-
-    // Notes
-    if (q.notes && q.notes.trim() !== '') {
-      document.getElementById('notes-section').style.display = 'block';
-      document.getElementById('notes-text').textContent = q.notes.trim();
-    }
-  }
-
-  function copyLink() {
-    navigator.clipboard.writeText(window.location.href)
-      .then(() => alert('Link copied!'))
-      .catch(() => alert('Could not copy link.'));
-  }
-
-  render();
+render();
 </script>
 
 </body>
