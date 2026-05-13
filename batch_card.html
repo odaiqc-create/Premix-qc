@@ -1,491 +1,458 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Batch Card</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --green:      #2D6A4F;
-    --green-mid:  #40916C;
-    --green-light:#D8F3DC;
-    --green-soft: #B7E4C7;
-    --gray-card:  #F4F6F8;
-    --gray-border:#E2E8EE;
-    --gray-label: #8A95A3;
-    --gray-dark:  #3D4A5C;
-    --navy:       #1A2535;
-    --white:      #FFFFFF;
-    --yellow-bg:  #FFFBEB;
-    --yellow:     #B45309;
-    --red-bg:     #FEF2F2;
-    --red:        #B91C1C;
-    --shadow:     0 2px 16px rgba(26,37,53,0.08);
-    --shadow-sm:  0 1px 4px rgba(26,37,53,0.07);
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Batch QC Card</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+```
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f0f2f5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 16px 48px;
+}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: #EFF2F5;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 28px 16px 48px;
-  }
+.card {
+  background: #fff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+}
 
-  .card {
-    background: var(--white);
-    border-radius: 24px;
-    box-shadow: 0 8px 48px rgba(26,37,53,0.12);
-    width: 100%;
-    max-width: 460px;
-    overflow: hidden;
-  }
+/* ── HEADER ── */
+.header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #eee;
+}
+.company-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.logo {
+  width: 44px; height: 44px;
+  background: #e8f5e9;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.company-name {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #5a8a5a;
+}
+.product-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+.batch-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5f5f5;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 13px;
+  color: #444;
+  margin-top: 10px;
+}
+.batch-pill .sep { color: #bbb; }
 
-  /* ── HEADER ── */
-  .hdr {
-    background: var(--white);
-    padding: 28px 24px 22px;
-    border-bottom: 1px solid var(--gray-border);
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-  }
+/* ── STATUS BAR ── */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 20px;
+  border-bottom: 1px solid #eee;
+}
+.status-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #999;
+}
+.status-badge {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1.5px solid #ccc;
+  color: #666;
+  background: #fff;
+}
+.status-badge.released {
+  background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7;
+}
+.status-badge.hold {
+  background: #fff3e0; color: #e65100; border-color: #ffcc80;
+}
+.status-badge.fail {
+  background: #ffebee; color: #c62828; border-color: #ef9a9a;
+}
 
-  .logo-wrap {
-    width: 56px; height: 56px;
-    background: var(--green-light);
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    flex-shrink: 0;
-    border: 1.5px solid var(--green-soft);
-  }
+/* ── SECTION TITLE ── */
+.section-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #aaa;
+  padding: 14px 20px 6px;
+}
 
-  .hdr-text { flex: 1; min-width: 0; }
+/* ── QC MEASUREMENTS ── */
+.qc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px 4px;
+}
+.qc-card {
+  border-radius: 14px;
+  padding: 14px;
+}
+.qc-card.density { background: #fff0f0; }
+.qc-card.moisture { background: #f0fff4; }
+.qc-icon { font-size: 18px; margin-bottom: 4px; }
+.qc-value {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.qc-card.density .qc-value { color: #c62828; }
+.qc-card.moisture .qc-value { color: #2e7d32; }
+.qc-unit {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #888;
+  margin-top: 2px;
+}
+.qc-ref {
+  font-size: 11px;
+  color: #888;
+  margin-top: 4px;
+}
+.qc-ref strong { color: #555; }
 
-  .hdr-company {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--green-mid);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-  }
+/* ── BATCH DETAILS ── */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px 4px;
+}
+.detail-card {
+  background: #f9f9f9;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.detail-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.detail-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 3px;
+}
+.detail-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  word-break: break-word;
+}
+.detail-value.empty { color: #ccc; font-weight: 400; font-size: 18px; }
 
-  .hdr-product {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.25;
-    margin-bottom: 8px;
-  }
+/* ── NOTES ── */
+.notes-box {
+  margin: 0 16px 4px;
+  background: #fffbea;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.notes-icon { font-size: 18px; flex-shrink: 0; }
+.notes-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+.notes-text {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
 
-  .hdr-batch-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--gray-card);
-    border: 1px solid var(--gray-border);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--gray-dark);
-  }
+/* ── DATE ── */
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px 4px;
+  font-size: 13px;
+  color: #888;
+}
 
-  /* ── STATUS BAND ── */
-  .status-band {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 24px;
-    background: var(--gray-card);
-    border-bottom: 1px solid var(--gray-border);
-  }
+/* ── ACTIONS ── */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 14px 16px 20px;
+}
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.15s;
+}
+.btn:active { opacity: 0.75; }
+.btn-primary { background: #2d5a2d; color: #fff; }
+.btn-secondary { background: #f0f0f0; color: #333; }
+```
 
-  .status-label {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--gray-label);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-
-  .badge {
-    padding: 5px 18px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-  }
-
-  .badge.RELEASED { background: var(--green-light); color: var(--green); border: 1.5px solid var(--green-soft); }
-  .badge.HOLD     { background: var(--yellow-bg);  color: var(--yellow); border: 1.5px solid #FCD34D; }
-  .badge.REJECTED { background: var(--red-bg);    color: var(--red);    border: 1.5px solid #FECACA; }
-  .badge.UNKNOWN  { background: var(--gray-card);  color: var(--gray-label); border: 1.5px solid var(--gray-border); }
-
-  /* ── BODY ── */
-  .body { padding: 20px 20px 8px; }
-
-  /* ── SECTION LABEL ── */
-  .section-lbl {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--gray-label);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    margin-top: 4px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .section-lbl::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--gray-border);
-  }
-
-  /* ── METRICS ROW ── */
-  .metrics {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-
-  .metric {
-    background: var(--gray-card);
-    border-radius: 14px;
-    padding: 14px 16px;
-    border: 1.5px solid var(--gray-border);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .metric.good { background: var(--green-light); border-color: var(--green-soft); }
-  .metric.warn { background: var(--red-bg);      border-color: #FECACA; }
-
-  .metric-icon { font-size: 16px; margin-bottom: 6px; display: block; }
-  .metric-value { font-size: 22px; font-weight: 700; color: var(--navy); font-family: 'DM Mono', monospace; }
-  .metric.good .metric-value { color: var(--green); }
-  .metric.warn .metric-value { color: var(--red); }
-  .metric-key {
-    font-size: 10px; font-weight: 600; color: var(--gray-label);
-    letter-spacing: .8px; text-transform: uppercase; margin-top: 4px;
-  }
-  .ref-line {
-    font-size: 10px; color: var(--gray-label); margin-top: 3px;
-    font-family: 'DM Mono', monospace;
-  }
-  .ref-line span { font-weight: 600; color: var(--gray-dark); }
-
-  /* ── INFO CARDS ── */
-  .info-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  .info-card {
-    background: var(--gray-card);
-    border: 1px solid var(--gray-border);
-    border-radius: 12px;
-    padding: 11px 13px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .info-card.full { grid-column: 1 / -1; }
-
-  .ic-icon {
-    font-size: 17px;
-    line-height: 1;
-    margin-top: 1px;
-    flex-shrink: 0;
-  }
-
-  .ic-body { min-width: 0; }
-
-  .ic-key {
-    font-size: 9px;
-    font-weight: 700;
-    color: var(--gray-label);
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-  }
-
-  .ic-val {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--navy);
-    line-height: 1.3;
-    word-break: break-word;
-  }
-
-  .ic-val.mono { font-family: 'DM Mono', monospace; font-size: 12px; }
-
-  /* ── NOTES CARD ── */
-  .notes-card {
-    background: #FFFBEB;
-    border: 1px solid #FCD34D;
-    border-radius: 12px;
-    padding: 13px 14px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    margin-bottom: 16px;
-  }
-
-  .notes-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-
-  .notes-body {}
-
-  .notes-key {
-    font-size: 9px; font-weight: 700; color: #92400E;
-    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px;
-  }
-
-  .notes-val { font-size: 13px; font-weight: 500; color: #78350F; line-height: 1.5; }
-
-  /* ── FOOTER ── */
-  .footer {
-    background: var(--gray-card);
-    border-top: 1px solid var(--gray-border);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .footer-item {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 11px; color: var(--gray-label);
-  }
-
-  .footer-item strong { color: var(--gray-dark); font-weight: 600; }
-
-  /* ── ACTIONS ── */
-  .actions {
-    display: flex; gap: 8px;
-    padding: 14px 20px 20px;
-  }
-
-  .btn {
-    flex: 1;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    font-size: 13px;
-    font-weight: 700;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    display: flex; align-items: center;
-    justify-content: center; gap: 7px;
-    transition: transform .12s, opacity .15s;
-  }
-
-  .btn:hover { opacity: .88; transform: translateY(-1px); }
-  .btn:active { transform: translateY(0); }
-
-  .btn-print { background: var(--green); color: #fff; }
-  .btn-copy  { background: var(--gray-card); color: var(--navy); border: 1.5px solid var(--gray-border); }
-
-  /* ── INVALID ── */
-  .invalid { padding: 64px 24px; text-align: center; color: var(--gray-label); }
-  .invalid .icon { font-size: 48px; margin-bottom: 14px; display: block; }
-
-  @media print {
-    body { background: #fff; padding: 0; }
-    .card { box-shadow: none; border-radius: 0; max-width: 100%; }
-    .actions { display: none; }
-    .metric, .info-card, .notes-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  }
-</style>
+  </style>
 </head>
 <body>
 <div class="card" id="card">
-  <div class="invalid"><span class="icon">⏳</span><p>Loading…</p></div>
+
+  <!-- HEADER -->
+
+  <div class="header">
+    <div class="company-row">
+      <div class="logo">🌿</div>
+      <div>
+        <div class="company-name" id="company">—</div>
+        <div class="product-name" id="product">—</div>
+      </div>
+    </div>
+    <div class="batch-pill">
+      <span>📦</span>
+      <span id="batch">—</span>
+      <span class="sep">·</span>
+      <span id="date">—</span>
+    </div>
+  </div>
+
+  <!-- STATUS -->
+
+  <div class="status-bar">
+    <span class="status-label">QC STATUS</span>
+    <span class="status-badge" id="status-badge">UNKNOWN</span>
+  </div>
+
+  <!-- QC MEASUREMENTS -->
+
+  <div class="section-title">QC MEASUREMENTS</div>
+  <div class="qc-grid">
+    <div class="qc-card density">
+      <div class="qc-icon">🧪</div>
+      <div class="qc-value" id="density">—</div>
+      <div class="qc-unit">DENSITY (G/ML)</div>
+      <div class="qc-ref">REF: <strong id="ref-density">—</strong></div>
+    </div>
+    <div class="qc-card moisture">
+      <div class="qc-icon">💧</div>
+      <div class="qc-value" id="moisture">—</div>
+      <div class="qc-unit">MOISTURE</div>
+      <div class="qc-ref">REF: <strong id="ref-moisture">—</strong></div>
+    </div>
+  </div>
+
+  <!-- BATCH DETAILS -->
+
+  <div class="section-title">BATCH DETAILS</div>
+  <div class="details-grid">
+    <div class="detail-card">
+      <div class="detail-icon">⚖️</div>
+      <div>
+        <div class="detail-label">PRODUCED QTY</div>
+        <div class="detail-value" id="produced-qty"><span class="empty">—</span></div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-icon">🛍️</div>
+      <div>
+        <div class="detail-label">BAG WEIGHT</div>
+        <div class="detail-value" id="bag-weight"><span class="empty">—</span></div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-icon">🏢</div>
+      <div>
+        <div class="detail-label">CUSTOMER</div>
+        <div class="detail-value" id="customer">—</div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-icon">🏷️</div>
+      <div>
+        <div class="detail-label">PRODUCT CODE</div>
+        <div class="detail-value" id="prod-code">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES (shown only if present) -->
+
+  <div id="notes-section" style="display:none;">
+    <div class="section-title">NOTES</div>
+    <div class="notes-box">
+      <div class="notes-icon">📝</div>
+      <div>
+        <div class="notes-label">QC NOTE</div>
+        <div class="notes-text" id="notes-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATE -->
+
+  <div class="date-row">
+    <span>📅</span>
+    <span id="date-display">—</span>
+  </div>
+
+  <!-- ACTIONS -->
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Print / PDF</button>
+    <button class="btn btn-secondary" onclick="copyLink()">🔗 Copy Link</button>
+  </div>
 </div>
 
 <script>
-  function q(k){ return new URLSearchParams(location.search).get(k) || ''; }
-
-  function esc(s){
-    return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function getParams() {
+    const p = new URLSearchParams(window.location.search);
+    return {
+      batch:      p.get('b')  || '',
+      product:    p.get('p')  || '',
+      density:    p.get('d')  || '',
+      moisture:   p.get('m')  || '',
+      status:     p.get('s')  || '',
+      date:       p.get('dt') || '',
+      customer:   p.get('c')  || '',
+      company:    p.get('co') || 'Alestsharia Animal Nutrition',
+      prodCode:   p.get('pc') || '',
+      refDensity: p.get('rd') || '',
+      refMoisture:p.get('rm') || '',
+      producedQty:p.get('pq') || '',   // NEW: Produced Qty (tons)
+      bagWeight:  p.get('bw') || '',   // NEW: Bag Weight (kg)
+      notes:      p.get('nt') || '',   // NEW: Notes from col T
+    };
   }
 
-  function val(s){ return esc(s) || '—'; }
-
-  function fmtDate(d){
-    try { return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
-    catch { return d || '—'; }
+  function formatDate(str) {
+    if (!str) return '—';
+    try {
+      const d = new Date(str);
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    } catch { return str; }
   }
 
-  function metricClass(v, low, high){
-    if(!v) return '';
-    const n = parseFloat(v);
-    return (n < low || n > high) ? 'warn' : 'good';
+  function setText(id, val, fallback = '—') {
+    document.getElementById(id).textContent = val || fallback;
   }
 
-  function render(){
-    /* ── URL params (matching your existing QR encoding) ── */
-    const company   = q('co')  || 'Alestsharia Animal Nutrition';
-    const product   = q('p')   || 'Broiler Starter Premix';
-    const batch     = q('b')   || 'DEMO-001';
-    const date      = q('dt')  || new Date().toISOString().slice(0,10);
-    const refDen    = q('rd')  || '';      // REF Density
-    const refMoi    = q('rm')  || '';      // REF Moisture
-    const density   = q('d')   || '';
-    const moisture  = q('m')   || '';
-    const qty       = q('qty') || '';      // Produced Qty (ton)
-    const bagWt     = q('bw')  || '';      // Bag Weight (kg)
-    const customer  = q('c')   || '';
-    const prodCode  = q('pc')  || '';
-    const notes     = q('n')   || '';
-    const status    = q('s')   || 'UNKNOWN';
-    const evalRes   = q('e')   || '';
+  function render() {
+    const q = getParams();
 
-    const sClass = ['RELEASED','HOLD','REJECTED'].includes(status) ? status : 'UNKNOWN';
+    // Header
+    document.getElementById('company').textContent = q.company.toUpperCase();
+    document.getElementById('product').textContent = q.product || '—';
+    document.getElementById('batch').textContent   = q.batch   || '—';
 
-    /* metric classes */
-    const dClass = metricClass(density,  0.40, 0.75);
-    const mClass = metricClass(moisture, 0,    10);
+    // Date
+    const dateFormatted = formatDate(q.date);
+    document.getElementById('date').textContent         = dateFormatted;
+    document.getElementById('date-display').textContent = dateFormatted;
 
-    /* notes visibility */
-    const showNotes = notes && notes.trim().length > 0;
+    // Page title
+    if (q.product) document.title = q.product + ' · ' + q.batch;
 
-    /* build inline ref lines */
-    const refDenLine = refDen ? `<div class="ref-line">REF: <span>${esc(refDen)} g/mL</span></div>` : '';
-    const refMoiLine = refMoi ? `<div class="ref-line">REF: <span>${esc(refMoi)}%</span></div>` : '';
+    // Status badge
+    const badge = document.getElementById('status-badge');
+    const s = q.status.toUpperCase();
+    badge.textContent = s || 'UNKNOWN';
+    if (s === 'RELEASED') badge.classList.add('released');
+    else if (s === 'HOLD') badge.classList.add('hold');
+    else if (s === 'FAIL') badge.classList.add('fail');
 
-    /* produced + bag weight side by side */
-    const qtyCard = `
-      <div class="info-card">
-        <div class="ic-icon">⚖️</div>
-        <div class="ic-body">
-          <div class="ic-key">Produced Qty</div>
-          <div class="ic-val">${val(qty) !== '—' ? esc(qty)+' ton' : '—'}</div>
-        </div>
-      </div>`;
+    // QC measurements
+    document.getElementById('density').textContent  = q.density  ? q.density  + ' g/mL' : '0.000';
+    document.getElementById('moisture').textContent = q.moisture ? q.moisture + '%'      : '0.00%';
+    document.getElementById('ref-density').textContent  = q.refDensity  ? q.refDensity  + ' g/mL' : '—';
+    document.getElementById('ref-moisture').textContent = q.refMoisture ? q.refMoisture + '%'      : '—';
 
-    const bagCard = `
-      <div class="info-card">
-        <div class="ic-icon">🛍️</div>
-        <div class="ic-body">
-          <div class="ic-key">Bag Weight</div>
-          <div class="ic-val">${val(bagWt) !== '—' ? esc(bagWt)+' kg' : '—'}</div>
-        </div>
-      </div>`;
+    // Batch details
+    // Produced qty: stored as tons → display as tons
+    const pqEl = document.getElementById('produced-qty');
+    if (q.producedQty) {
+      pqEl.innerHTML = '';
+      pqEl.textContent = parseFloat(q.producedQty).toFixed(3) + ' ton';
+    }
 
-    const notesSection = showNotes ? `
-      <div class="notes-card">
-        <div class="notes-icon">📋</div>
-        <div class="notes-body">
-          <div class="notes-key">QC Notes</div>
-          <div class="notes-val">${esc(notes)}</div>
-        </div>
-      </div>` : '';
+    // Bag weight in kg
+    const bwEl = document.getElementById('bag-weight');
+    if (q.bagWeight) {
+      bwEl.innerHTML = '';
+      bwEl.textContent = parseFloat(q.bagWeight).toFixed(1) + ' kg';
+    }
 
-    document.getElementById('card').innerHTML = `
+    document.getElementById('customer').textContent  = q.customer  || '—';
+    document.getElementById('prod-code').textContent = q.prodCode  || '—';
 
-      <!-- HEADER -->
-      <div class="hdr">
-        <div class="logo-wrap">🌿</div>
-        <div class="hdr-text">
-          <div class="hdr-company">${esc(company)}</div>
-          <div class="hdr-product">${esc(product)}</div>
-          <div class="hdr-batch-pill">📦 ${esc(batch)} &nbsp;·&nbsp; ${fmtDate(date)}</div>
-        </div>
-      </div>
-
-      <!-- STATUS BAND -->
-      <div class="status-band">
-        <span class="status-label">QC Status</span>
-        <span class="badge ${sClass}">${esc(status)}</span>
-      </div>
-
-      <!-- BODY -->
-      <div class="body">
-
-        <!-- DENSITY & MOISTURE -->
-        <div class="section-lbl">QC Measurements</div>
-        <div class="metrics">
-          <div class="metric ${dClass}">
-            <span class="metric-icon">🧪</span>
-            <div class="metric-value">${density ? esc(density) : '—'}</div>
-            <div class="metric-key">Density (g/mL)</div>
-            ${refDenLine}
-          </div>
-          <div class="metric ${mClass}">
-            <span class="metric-icon">💧</span>
-            <div class="metric-value">${moisture ? esc(moisture)+'%' : '—'}</div>
-            <div class="metric-key">Moisture</div>
-            ${refMoiLine}
-          </div>
-        </div>
-
-        <!-- BATCH INFO CARDS -->
-        <div class="section-lbl">Batch Details</div>
-        <div class="info-cards">
-          ${qtyCard}
-          ${bagCard}
-          <div class="info-card">
-            <div class="ic-icon">🏢</div>
-            <div class="ic-body">
-              <div class="ic-key">Customer</div>
-              <div class="ic-val">${val(customer)}</div>
-            </div>
-          </div>
-          <div class="info-card">
-            <div class="ic-icon">🔖</div>
-            <div class="ic-body">
-              <div class="ic-key">Product Code</div>
-              <div class="ic-val mono">${val(prodCode)}</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- QC NOTES (only if present) -->
-        ${notesSection}
-
-      </div>
-
-      <!-- FOOTER -->
-      <div class="footer">
-        <div class="footer-item">📅 <strong>${fmtDate(date)}</strong></div>
-        ${evalRes ? `<div class="footer-item">✅ Eval: <strong>${esc(evalRes)}</strong></div>` : ''}
-      </div>
-
-      <!-- ACTIONS -->
-      <div class="actions">
-        <button class="btn btn-print" onclick="window.print()">🖨️ Print / PDF</button>
-        <button class="btn btn-copy"  onclick="copyLink()">🔗 Copy Link</button>
-      </div>
-    `;
+    // Notes
+    if (q.notes && q.notes.trim() !== '') {
+      document.getElementById('notes-section').style.display = 'block';
+      document.getElementById('notes-text').textContent = q.notes.trim();
+    }
   }
 
-  function copyLink(){
-    navigator.clipboard.writeText(location.href)
-      .then(()=> alert('✅ Link copied!'))
-      .catch(()=> prompt('Copy this link:', location.href));
+  function copyLink() {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => alert('Link copied!'))
+      .catch(() => alert('Could not copy link.'));
   }
 
   render();
 </script>
+
 </body>
 </html>
