@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pallet Card — Alestsharia</title>
+<style>
+  :root {
+    --blue-dark: #1F4E79;
+    --blue-mid:  #2E75B6;
+    --blue-light:#BDD7EE;
+    --green:     #1a7a3c;
+    --green-light:#e6f4ec;
+    --gold:      #C9A227;
+    --border:    #c8d8e8;
+    --bg:        #f0f4f8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 12px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.13);
+    width: 100%;
+    max-width: 520px;
+    overflow: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blue-dark);
+    padding: 18px 24px 14px;
+    text-align: center;
+  }
+  .company {
+    font-size: 13px;
+    color: var(--blue-light);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .header h1 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .pallet-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 14px;
+    border-radius: 20px;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── QC STAMP ── */
+  .stamp-wrap {
+    background: var(--green-light);
+    border-bottom: 2px solid var(--border);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .stamp {
+    border: 4px solid var(--green);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--green);
+    transform: rotate(-8deg);
+    flex-shrink: 0;
+  }
+  .stamp .checkmark { font-size: 26px; line-height: 1; }
+  .stamp .label     { font-size: 9px; font-weight: 800; letter-spacing: 1px; margin-top: 2px; }
+  .stamp-text {
+    color: var(--green);
+    font-size: 16px;
+    font-weight: 700;
+    text-align: right;
+  }
+  .stamp-text span { display: block; font-size: 11px; color: #555; font-weight: 400; }
+
+  /* ── FIELDS ── */
+  .fields {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .row {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px dashed #dde4ed;
+    padding-bottom: 10px;
+    gap: 8px;
+  }
+  .row:last-child { border-bottom: none; }
+  .lbl {
+    font-size: 11px;
+    color: #607080;
+    font-weight: 600;
+    min-width: 130px;
+    flex-shrink: 0;
+    letter-spacing: 0.3px;
+  }
+  .val {
+    font-size: 14px;
+    color: #1a2535;
+    font-weight: 700;
+    flex: 1;
+    text-align: left;
+    direction: ltr;
+    word-break: break-all;
+  }
+  .val.arabic {
+    text-align: right;
+    direction: rtl;
+    word-break: normal;
+  }
+  .highlight .val {
+    color: var(--blue-dark);
+    font-size: 16px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--blue-light), transparent);
+    margin: 0 24px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--blue-dark);
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 10px;
+    color: var(--blue-light);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── NO DATA ── */
+  .no-data {
+    padding: 40px;
+    text-align: center;
+    color: #c00;
+    font-size: 15px;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card { box-shadow: none; border-radius: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="header">
+    <div class="company">Alestsharia Animal Nutrition</div>
+    <h1>ورقة الطبلية</h1>
+    <div class="pallet-badge" id="palletBadge">Pallet #—</div>
+  </div>
+
+  <div class="stamp-wrap">
+    <div class="stamp">
+      <div class="checkmark">✔</div>
+      <div class="label">QC PASSED</div>
+    </div>
+    <div class="stamp-text">
+      فحص الجودة: مقبول
+      <span>Quality Control Approved</span>
+    </div>
+  </div>
+
+  <div class="fields" id="fields">
+    <div class="no-data">لم يتم تمرير بيانات — تأكد من رابط الـ QR</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="footer" id="footer">Alestsharia Animal Nutrition · QC Department</div>
+</div>
+
+<script>
+const p = new URLSearchParams(window.location.search);
+
+const b  = p.get('b')  || '';   // Batch No
+const pn = p.get('p')  || '';   // Pallet No
+const pr = p.get('pr') || '';   // Product Name
+const c  = p.get('c')  || '';   // Code
+const d  = p.get('d')  || '';   // Date
+const w  = p.get('w')  || '';   // Pallet Weight kg
+const n  = p.get('n')  || '';   // # Bags
+const bw = p.get('bw') || '';   // Bag Weight kg
+
+if (b) {
+  // Badge
+  document.getElementById('palletBadge').textContent = `Pallet #${pn}`;
+
+  // Build fields
+  const rows = [
+    { lbl: 'اسم المنتج',              val: pr, arabic: true,  hi: true },
+    { lbl: 'رقم التشغيلة / Batch No.',val: b,  arabic: false, hi: false },
+    { lbl: 'رمز المنتج / Code',       val: c,  arabic: false, hi: false },
+    { lbl: 'تاريخ الإنتاج / Date',    val: d,  arabic: false, hi: false },
+    { lbl: 'وزن الطبلية الكامل',      val: `${w} كغ`, arabic: true, hi: true },
+    { lbl: 'عدد الشوالات',            val: `${n} شوال`, arabic: true, hi: false },
+    { lbl: 'وزن الشوال',              val: `${bw} كغ`, arabic: true, hi: false },
+    { lbl: 'رقم الطبلية / Pallet No.',val: pn, arabic: false, hi: false },
+  ];
+
+  const fieldsEl = document.getElementById('fields');
+  fieldsEl.innerHTML = rows.map(r =>
+    `<div class="row${r.hi ? ' highlight' : ''}">
+      <div class="lbl">${r.lbl}</div>
+      <div class="val${r.arabic ? ' arabic' : ''}">${r.val || '—'}</div>
+    </div>`
+  ).join('');
+
+  // Footer
+  document.getElementById('footer').textContent =
+    `Alestsharia Animal Nutrition · QC Dept · ${d}`;
+}
+</script>
+</body>
+</html>
