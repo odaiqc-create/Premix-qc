@@ -3,240 +3,443 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pallet Card — Alestsharia</title>
+<title>Pallet Card — Alestesharia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue-dark: #1F4E79;
-    --blue-mid:  #2E75B6;
-    --blue-light:#BDD7EE;
-    --green:     #1a7a3c;
-    --green-light:#e6f4ec;
-    --gold:      #C9A227;
-    --border:    #c8d8e8;
-    --bg:        #f0f4f8;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--bg);
-    min-height: 100vh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 24px 12px;
-  }
-  .card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 6px 32px rgba(0,0,0,0.13);
-    width: 100%;
-    max-width: 520px;
-    overflow: hidden;
-  }
+:root {
+  --green-deep:  #1B5E20;
+  --green-main:  #2E7D32;
+  --green-mid:   #388E3C;
+  --green-light: #A5D6A7;
+  --green-pale:  #E8F5E9;
+  --gold:        #C9A227;
+  --gold-light:  #F9E07A;
+  --white:       #FFFFFF;
+  --off-white:   #F7FAF7;
+  --text-dark:   #1a2e1a;
+  --text-mid:    #4a6a4a;
+  --text-light:  #7a9a7a;
+  --border:      #C8DCC8;
+  --shadow:      rgba(27,94,32,0.15);
+}
 
-  /* ── HEADER ── */
-  .header {
-    background: var(--blue-dark);
-    padding: 18px 24px 14px;
-    text-align: center;
-  }
-  .company {
-    font-size: 13px;
-    color: var(--blue-light);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .header h1 {
-    color: #fff;
-    font-size: 20px;
-    font-weight: 700;
-  }
-  .pallet-badge {
-    display: inline-block;
-    background: var(--gold);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 3px 14px;
-    border-radius: 20px;
-    margin-top: 8px;
-    letter-spacing: 0.5px;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── QC STAMP ── */
-  .stamp-wrap {
-    background: var(--green-light);
-    border-bottom: 2px solid var(--border);
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-  }
-  .stamp {
-    border: 4px solid var(--green);
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--green);
-    transform: rotate(-8deg);
-    flex-shrink: 0;
-  }
-  .stamp .checkmark { font-size: 26px; line-height: 1; }
-  .stamp .label     { font-size: 9px; font-weight: 800; letter-spacing: 1px; margin-top: 2px; }
-  .stamp-text {
-    color: var(--green);
-    font-size: 16px;
-    font-weight: 700;
-    text-align: right;
-  }
-  .stamp-text span { display: block; font-size: 11px; color: #555; font-weight: 400; }
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: linear-gradient(135deg, #0d3b11 0%, #1B5E20 45%, #2a6e2e 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 12px;
+  position: relative;
+  overflow-x: hidden;
+}
 
-  /* ── FIELDS ── */
-  .fields {
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .row {
-    display: flex;
-    align-items: baseline;
-    border-bottom: 1px dashed #dde4ed;
-    padding-bottom: 10px;
-    gap: 8px;
-  }
-  .row:last-child { border-bottom: none; }
-  .lbl {
-    font-size: 11px;
-    color: #607080;
-    font-weight: 600;
-    min-width: 130px;
-    flex-shrink: 0;
-    letter-spacing: 0.3px;
-  }
-  .val {
-    font-size: 14px;
-    color: #1a2535;
-    font-weight: 700;
-    flex: 1;
-    text-align: left;
-    direction: ltr;
-    word-break: break-all;
-  }
-  .val.arabic {
-    text-align: right;
-    direction: rtl;
-    word-break: normal;
-  }
-  .highlight .val {
-    color: var(--blue-dark);
-    font-size: 16px;
-  }
+/* ─── background texture dots ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
 
-  /* ── DIVIDER ── */
-  .divider {
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--blue-light), transparent);
-    margin: 0 24px;
-  }
+/* ─── Card ─── */
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.08);
+  overflow: hidden;
+  animation: riseIn 0.55s cubic-bezier(0.22,1,0.36,1) both;
+}
 
-  /* ── FOOTER ── */
-  .footer {
-    background: var(--blue-dark);
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 10px;
-    color: var(--blue-light);
-    letter-spacing: 0.5px;
-  }
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
 
-  /* ── NO DATA ── */
-  .no-data {
-    padding: 40px;
-    text-align: center;
-    color: #c00;
-    font-size: 15px;
-  }
+/* ─── Header ─── */
+.header {
+  background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-main) 100%);
+  padding: 22px 24px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  bottom: -50px; left: -20px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+  pointer-events: none;
+}
 
-  @media print {
-    body { background: #fff; padding: 0; }
-    .card { box-shadow: none; border-radius: 0; max-width: 100%; }
-  }
+.logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.company-block { flex: 1; }
+.company-en {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--green-light);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.company-ar {
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  margin-top: 3px;
+  font-weight: 400;
+}
+.logo-icon {
+  width: 52px; height: 52px;
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+.batch-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 30px;
+  padding: 4px 14px;
+  font-size: 12px;
+  color: var(--gold-light);
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+.batch-pill::before { content: '◉'; font-size: 8px; }
+
+/* ─── QC Stamp Banner ─── */
+.stamp-banner {
+  background: linear-gradient(90deg, var(--green-pale) 0%, #d4edda 100%);
+  border-bottom: 2px solid var(--green-light);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  animation: slideIn 0.4s 0.25s ease both;
+}
+@keyframes slideIn {
+  from { opacity:0; transform: translateX(-12px); }
+  to   { opacity:1; transform: translateX(0); }
+}
+.stamp-circle {
+  width: 64px; height: 64px;
+  border: 3.5px solid var(--green-main);
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transform: rotate(-6deg);
+  flex-shrink: 0;
+  background: white;
+  box-shadow: 0 2px 12px rgba(46,125,50,0.2);
+}
+.stamp-check { font-size: 22px; color: var(--green-main); line-height: 1; }
+.stamp-txt   { font-size: 7.5px; font-weight: 800; color: var(--green-main); letter-spacing: 1px; margin-top: 1px; }
+.stamp-text-block { flex: 1; }
+.stamp-main {
+  font-size: 16px; font-weight: 800;
+  color: var(--green-deep);
+}
+.stamp-sub {
+  font-size: 11px; color: var(--text-mid);
+  font-weight: 400; margin-top: 1px;
+}
+
+/* ─── Gold divider ─── */
+.gold-line {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ─── Fields ─── */
+.fields {
+  padding: 20px 22px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--green-main);
+  padding: 10px 0 6px;
+  border-bottom: 1px solid var(--green-pale);
+  margin-bottom: 2px;
+}
+
+.field-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--green-pale);
+  min-height: 42px;
+  transition: background 0.15s;
+}
+.field-row:hover { background: var(--off-white); }
+.field-row.accent-row { background: var(--green-pale); border-radius: 8px; margin: 4px 0; border-bottom: none; }
+.field-row.accent-row:hover { background: #dcedc8; }
+
+.f-label {
+  font-size: 11px;
+  color: var(--text-mid);
+  font-weight: 500;
+  padding: 10px 12px 10px 0;
+  min-width: 128px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+.f-label .sub { display: block; font-size: 9.5px; color: var(--text-light); font-weight: 400; }
+
+.f-val {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  padding: 10px 0 10px 12px;
+  display: flex;
+  align-items: center;
+  direction: ltr;
+  text-align: left;
+  word-break: break-all;
+}
+.f-val.ar {
+  direction: rtl;
+  text-align: right;
+  word-break: normal;
+  font-size: 15px;
+}
+.f-val.big {
+  font-size: 18px;
+  color: var(--green-deep);
+}
+.f-val.code {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: var(--green-main);
+}
+
+.separator {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 8px 0;
+}
+
+/* ─── Footer ─── */
+.footer {
+  background: var(--green-deep);
+  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.footer-left {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  color: var(--green-light);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+.footer-date {
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.5px;
+}
+.footer-badge {
+  background: var(--gold);
+  color: var(--green-deep);
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  font-family: 'Barlow Condensed', sans-serif;
+  white-space: nowrap;
+}
+
+/* ─── No data ─── */
+.no-data {
+  padding: 48px 24px;
+  text-align: center;
+  color: #c00;
+}
+.no-data h2 { font-size: 18px; margin-bottom: 8px; }
+.no-data p  { font-size: 13px; color: #777; }
+
+@media print {
+  body { background: white; padding:0; }
+  .card { box-shadow: none; border-radius:0; max-width:100%; animation:none; }
+  .stamp-banner { animation:none; }
+}
+@media (max-width: 480px) {
+  .f-label { min-width: 108px; font-size: 10.5px; }
+}
 </style>
 </head>
 <body>
 <div class="card" id="card">
+
+  <!-- HEADER -->
   <div class="header">
-    <div class="company">Alestsharia Animal Nutrition</div>
-    <h1>ورقة الطبلية</h1>
-    <div class="pallet-badge" id="palletBadge">Pallet #—</div>
+    <div class="logo-row">
+      <div class="company-block">
+        <div class="company-en">Alestesharia Animal Nutrition</div>
+        <div class="company-ar">الشركة الاستشارية للإضافات العلفية</div>
+      </div>
+      <div class="logo-icon">🌿</div>
+    </div>
+    <div class="page-title">ورقة الطبلية — Pallet Card</div>
+    <div class="batch-pill" id="batchPill">Loading…</div>
   </div>
 
-  <div class="stamp-wrap">
-    <div class="stamp">
-      <div class="checkmark">✔</div>
-      <div class="label">QC PASSED</div>
+  <!-- QC STAMP -->
+  <div class="stamp-banner">
+    <div class="stamp-circle">
+      <div class="stamp-check">✔</div>
+      <div class="stamp-txt">QC PASSED</div>
     </div>
-    <div class="stamp-text">
-      فحص الجودة: مقبول
-      <span>Quality Control Approved</span>
+    <div class="stamp-text-block">
+      <div class="stamp-main">فحص الجودة: مقبول ✓</div>
+      <div class="stamp-sub">Quality Control — Approved &amp; Released</div>
     </div>
   </div>
+  <div class="gold-line"></div>
 
+  <!-- FIELDS -->
   <div class="fields" id="fields">
-    <div class="no-data">لم يتم تمرير بيانات — تأكد من رابط الـ QR</div>
+    <div class="no-data">
+      <h2>⚠ لا توجد بيانات</h2>
+      <p>تأكد من أن رابط الـ QR يحتوي على جميع المعاملات المطلوبة</p>
+    </div>
   </div>
 
-  <div class="divider"></div>
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>
+      <div class="footer-left">QC Department · Alestesharia</div>
+      <div class="footer-date" id="footerDate"></div>
+    </div>
+    <div class="footer-badge">CERTIFIED</div>
+  </div>
 
-  <div class="footer" id="footer">Alestsharia Animal Nutrition · QC Department</div>
 </div>
 
 <script>
-const p = new URLSearchParams(window.location.search);
+const p  = new URLSearchParams(window.location.search);
+const b  = p.get('b')  || '';
+const pr = p.get('pr') || '';
+const lc = p.get('lc') || '';
+const c  = p.get('c')  || '';
+const d  = p.get('d')  || '';
+const w  = p.get('w')  || '';
+const n  = p.get('n')  || '';
+const bw = p.get('bw') || '';
 
-const b  = p.get('b')  || '';   // Batch No
-const pn = p.get('p')  || '';   // Pallet No
-const pr = p.get('pr') || '';   // Product Name
-const c  = p.get('c')  || '';   // Code
-const d  = p.get('d')  || '';   // Date
-const w  = p.get('w')  || '';   // Pallet Weight kg
-const n  = p.get('n')  || '';   // # Bags
-const bw = p.get('bw') || '';   // Bag Weight kg
+if (!b) {
+  document.getElementById('batchPill').textContent = 'No Data';
+} else {
+  document.getElementById('batchPill').textContent = 'Batch: ' + b;
+  document.getElementById('footerDate').textContent = 'Production Date: ' + d;
 
-if (b) {
-  // Badge
-  document.getElementById('palletBadge').textContent = `Pallet #${pn}`;
-
-  // Build fields
   const rows = [
-    { lbl: 'اسم المنتج',              val: pr, arabic: true,  hi: true },
-    { lbl: 'رقم التشغيلة / Batch No.',val: b,  arabic: false, hi: false },
-    { lbl: 'رمز المنتج / Code',       val: c,  arabic: false, hi: false },
-    { lbl: 'تاريخ الإنتاج / Date',    val: d,  arabic: false, hi: false },
-    { lbl: 'وزن الطبلية الكامل',      val: `${w} كغ`, arabic: true, hi: true },
-    { lbl: 'عدد الشوالات',            val: `${n} شوال`, arabic: true, hi: false },
-    { lbl: 'وزن الشوال',              val: `${bw} كغ`, arabic: true, hi: false },
-    { lbl: 'رقم الطبلية / Pallet No.',val: pn, arabic: false, hi: false },
+    // Section: Product Info
+    { type: 'section', label: 'Product Information — بيانات المنتج' },
+    {
+      label: 'اسم المنتج', sub: 'Product Name',
+      val: pr, ar: true, big: true, accent: true
+    },
+    {
+      label: 'Label Code', sub: 'رمز الملصق',
+      val: lc, ar: false, code: true
+    },
+    {
+      label: 'Product Code', sub: 'رمز المنتج',
+      val: c, ar: false, code: true
+    },
+    {
+      label: 'تاريخ الإنتاج', sub: 'Production Date',
+      val: d, ar: false
+    },
+    // Section: Pallet Details
+    { type: 'section', label: 'Pallet Details — بيانات الطبلية' },
+    {
+      label: 'وزن الطبلية الكامل', sub: 'Total Pallet Weight',
+      val: w + ' kg', ar: false, big: true, accent: true
+    },
+    {
+      label: 'عدد الشوالات', sub: 'Number of Bags',
+      val: n + ' bags', ar: false
+    },
+    {
+      label: 'وزن الشوال', sub: 'Bag Weight',
+      val: bw + ' kg', ar: false
+    },
+    // Section: Batch
+    { type: 'section', label: 'Batch Reference — رقم التشغيلة' },
+    {
+      label: 'Batch No.', sub: 'رقم التشغيلة',
+      val: b, ar: false, code: true
+    },
   ];
 
   const fieldsEl = document.getElementById('fields');
-  fieldsEl.innerHTML = rows.map(r =>
-    `<div class="row${r.hi ? ' highlight' : ''}">
-      <div class="lbl">${r.lbl}</div>
-      <div class="val${r.arabic ? ' arabic' : ''}">${r.val || '—'}</div>
-    </div>`
-  ).join('');
-
-  // Footer
-  document.getElementById('footer').textContent =
-    `Alestsharia Animal Nutrition · QC Dept · ${d}`;
+  fieldsEl.innerHTML = rows.map(r => {
+    if (r.type === 'section') {
+      return `<div class="section-title">${r.label}</div>`;
+    }
+    const valClass = ['f-val', r.ar?'ar':'', r.big?'big':'', r.code?'code':''].filter(Boolean).join(' ');
+    const rowClass = 'field-row' + (r.accent ? ' accent-row' : '');
+    return `<div class="${rowClass}">
+      <div class="f-label">${r.label}<span class="sub">${r.sub}</span></div>
+      <div class="${valClass}">${r.val || '—'}</div>
+    </div>`;
+  }).join('');
 }
 </script>
 </body>
