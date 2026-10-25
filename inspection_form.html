@@ -210,7 +210,7 @@
     <tr><td>Packaging area</td><td>Line clearance</td><td class="status"><input type="checkbox"></td><td class="status"><input type="checkbox"></td><td><input type="text"></td></tr>
     <tr class="timerow">
       <td>Start time <input type="text" style="width:60px;display:inline-block"> &nbsp; End time <input type="text" style="width:60px;display:inline-block"></td>
-      <td>Done by (PRO): <input type="text" data-key="by" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
+      <td>Done by (PRO): <input type="text" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
     </tr>
 
     <tr class="section"><td colspan="5">Cleaning — As stated in SOPs</td></tr>
@@ -219,7 +219,7 @@
     <tr><td>Personnel</td><td class="status"><input type="checkbox"></td><td class="status"><input type="checkbox"></td><td><input type="text"></td></tr>
     <tr class="timerow">
       <td>Start time <input type="text" style="width:60px;display:inline-block"> &nbsp; End time <input type="text" style="width:60px;display:inline-block"></td>
-      <td>Done by (PRO): <input type="text" data-key="by" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
+      <td>Done by (PRO): <input type="text" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
     </tr>
 
     <tr><td>Check maintenance status (each machine) — Maintenance daily logbooks</td><td>Daily Maintenance</td><td class="status"><input type="checkbox"></td><td class="status"><input type="checkbox"></td><td><input type="text"></td></tr>
@@ -231,7 +231,7 @@
     <tr><td>Quality of RM: physical appearance / lumping / foreign materials / other problems</td><td>Physical appearance</td><td class="status"><input type="checkbox"></td><td class="status"><input type="checkbox"></td><td><input type="text"></td></tr>
     <tr class="timerow">
       <td>Start time <input type="text" style="width:60px;display:inline-block"> &nbsp; End time <input type="text" style="width:60px;display:inline-block"></td>
-      <td>Done by (PRO): <input type="text" data-key="by" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
+      <td>Done by (PRO): <input type="text" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
     </tr>
 
     <tr class="section"><td colspan="5">Operation System Readiness (control)</td></tr>
@@ -240,7 +240,7 @@
     <tr><td>Matching Bins Filling with the system</td><td></td><td class="status"><input type="checkbox"></td><td class="status"><input type="checkbox"></td><td><input type="text"></td></tr>
     <tr class="timerow">
       <td>Start time <input type="text" style="width:60px;display:inline-block"> &nbsp; End time <input type="text" style="width:60px;display:inline-block"></td>
-      <td>Done by (PRO): <input type="text" data-key="by" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
+      <td>Done by (PRO): <input type="text" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
     </tr>
 
     <tr class="section"><td colspan="5">Weighing</td></tr>
@@ -248,7 +248,7 @@
     <tr><td>Order of weighing</td><td>According to mixing SOP</td><td class="status"><input type="checkbox"></td><td class="status"><input type="checkbox"></td><td><input type="text"></td></tr>
     <tr class="timerow">
       <td>Start time <input type="text" style="width:60px;display:inline-block"> &nbsp; End time <input type="text" style="width:60px;display:inline-block"></td>
-      <td>Done by (PRO): <input type="text" data-key="by" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
+      <td>Done by (PRO): <input type="text" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
     </tr>
 
     <tr class="section"><td colspan="5">Grinding</td></tr>
@@ -266,7 +266,7 @@
     <tr><td>Emptying</td><td>Complete emptying</td><td class="status"><input type="checkbox"></td><td class="status"><input type="checkbox"></td><td><input type="text"></td></tr>
     <tr class="timerow">
       <td>Start time <input type="text" style="width:60px;display:inline-block"> &nbsp; End time <input type="text" style="width:60px;display:inline-block"></td>
-      <td>Done by: <input type="text" data-key="by" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
+      <td>Done by: <input type="text" style="width:55%;display:inline-block"></td><td colspan="2" class="status">Checked by</td><td><input type="text"></td>
     </tr>
 
     <tr class="section"><td colspan="5">Product</td></tr>
@@ -381,7 +381,7 @@
   <table class="form" style="margin-top:10px">
     <tr class="final-decision"><td colspan="3">Final Decision — Final Product Transfer to Quarantine area or Storage</td></tr>
     <tr class="decision-row">
-      <td class="lbl"><input type="checkbox" style="margin-left:6px">Release</td>
+      <td class="lbl"><input type="checkbox" checked style="margin-left:6px">Release</td>
       <td>Done By: <input type="text"></td>
       <td>Checked By: <input type="text"></td>
     </tr>
@@ -439,8 +439,26 @@ document.addEventListener('change', function(e){
   var b=tr.querySelectorAll('td.status input[type=checkbox]');
   if(b.length===2 && c.checked){ b.forEach(function(x){ if(x!==c) x.checked=false; }); }
 });
+function syncDecision(){
+  var nm=q('by');
+  document.querySelectorAll('#sheet tr.decision-row').forEach(function(tr){
+    var cb=tr.querySelector('td.lbl input[type=checkbox]');
+    var inp=tr.querySelector('input[type=text]');
+    if(cb.checked){ if(!inp.value) inp.value=nm; }
+    else if(nm && inp.value===nm){ inp.value=''; }
+  });
+}
+document.addEventListener('change', function(e){
+  var c=e.target;
+  if(c.type!=='checkbox' || !c.closest('td.lbl')) return;
+  if(c.checked){
+    document.querySelectorAll('#sheet tr.decision-row td.lbl input[type=checkbox]').forEach(function(x){ if(x!==c) x.checked=false; });
+  }
+  syncDecision();
+});
 prefill();
 tickAll();
+syncDecision();
 function clearForm(){
   if(!confirm("متأكد إنك بدك تفضي كل الحقول؟")) return;
   document.querySelectorAll('#sheet input[type=text]').forEach(function(i){
